@@ -8,7 +8,8 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
 {
     public class Reward
     {
-        public List<IRewardTag> RewardTags;
+        public string Name { get; set; }
+        public List<IRewardTag> RewardTags { get; set; }
         public Reward(ChanceTag chance, params IRewardTag[] tags)
         {
             RewardTags = new List<IRewardTag>();

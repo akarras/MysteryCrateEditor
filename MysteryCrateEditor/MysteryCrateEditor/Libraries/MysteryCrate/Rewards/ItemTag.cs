@@ -13,11 +13,17 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
 {
     public class ItemTag : TagBase
     {
+        [JsonProperty("Item")]
         public string Item;
+        [JsonProperty("Amount")]
         public int Amount = 1;
+        [JsonProperty("Name")]
         public string Name;
+        [JsonProperty("Lore")]
         public List<string> Lore;
+        [JsonProperty("Enchants")]
         public List<EnchantData> Enchants;
+        [JsonProperty("ColorData")]
         public ColorData Colors;
         public ItemTag() : base("item")
         {

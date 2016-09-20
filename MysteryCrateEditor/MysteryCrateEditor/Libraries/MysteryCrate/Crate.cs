@@ -19,10 +19,8 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             Rewards = new List<Reward>();
             Name = name;
         }
-
-        // Public variables, whaddaya gonna do about it?
-        public List<Reward> Rewards;
-        public Guid Id;
-        public String Name;
+        public Guid Id { get; set; }
+        public List<Reward> Rewards { get; set; }
+        public string Name { get; set; }
     }
 }

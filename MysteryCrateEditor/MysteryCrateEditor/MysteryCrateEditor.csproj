@@ -67,20 +67,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Libraries\MysteryCrates\Crate.cs" />
-    <Compile Include="Libraries\MysteryCrates\Rewards\ArmorSets\ArmorSet.cs" />
-    <Compile Include="Libraries\MysteryCrates\Rewards\BroadcastTag.cs" />
-    <Compile Include="Libraries\MysteryCrates\Rewards\ChanceTag.cs" />
-    <Compile Include="Libraries\MysteryCrates\Rewards\CommandTag.cs" />
-    <Compile Include="Libraries\MysteryCrates\Rewards\DisplayTag.cs" />
-    <Compile Include="Libraries\MysteryCrates\Rewards\ITag.cs" />
-    <Compile Include="Libraries\MysteryCrates\Rewards\ItemData\ColorData.cs" />
-    <Compile Include="Libraries\MysteryCrates\Rewards\ItemData\EnchantData.cs" />
-    <Compile Include="Libraries\MysteryCrates\Rewards\ItemTag.cs" />
-    <Compile Include="Libraries\MysteryCrates\Rewards\MinecraftJson\MojangItem.cs" />
-    <Compile Include="Libraries\MysteryCrates\Rewards\PreformedRewards\SpawnerReward.cs" />
-    <Compile Include="Libraries\MysteryCrates\Rewards\Reward.cs" />
-    <Compile Include="Libraries\MysteryCrates\Rewards\Tag.cs" />
+    <Compile Include="Libraries\MysteryCrate\Crate.cs" />
+    <Compile Include="Libraries\MysteryCrate\Rewards\ArmorSets\ArmorSet.cs" />
+    <Compile Include="Libraries\MysteryCrate\Rewards\BroadcastTag.cs" />
+    <Compile Include="Libraries\MysteryCrate\Rewards\ChanceTag.cs" />
+    <Compile Include="Libraries\MysteryCrate\Rewards\CommandTag.cs" />
+    <Compile Include="Libraries\MysteryCrate\Rewards\DisplayTag.cs" />
+    <Compile Include="Libraries\MysteryCrate\Rewards\ITag.cs" />
+    <Compile Include="Libraries\MysteryCrate\Rewards\ItemData\ColorData.cs" />
+    <Compile Include="Libraries\MysteryCrate\Rewards\ItemData\EnchantData.cs" />
+    <Compile Include="Libraries\MysteryCrate\Rewards\ItemTag.cs" />
+    <Compile Include="Libraries\MysteryCrate\Rewards\MinecraftJson\MojangItem.cs" />
+    <Compile Include="Libraries\MysteryCrate\Rewards\PreformedRewards\SpawnerReward.cs" />
+    <Compile Include="Libraries\MysteryCrate\Rewards\Reward.cs" />
+    <Compile Include="Libraries\MysteryCrate\Rewards\Tag.cs" />
     <Compile Include="Libraries\Storage\IStorage.cs" />
     <Compile Include="Libraries\Storage\JSONStorage.cs" />
     <Compile Include="MainWindow.xaml.cs">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,8 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
 {
     public class BroadcastTag : TagBase
     {
-        string broadcastMessage;
+        [JsonProperty("BroadcastMessage")]
+        public string broadcastMessage;
 
         public BroadcastTag(string message):base("broadcast")
         {

@@ -28,17 +28,32 @@ namespace MysteryCrateEditor
             InitializeComponent();
             // Initialize our storage and load our crates from memory
             storage = new JSONStorage();
-            CrateList.DataContext = storage.GetCrates();
+            updateUI();
+        }
+
+        private void updateUI()
+        {
+            CrateList.ItemsSource = storage.GetCrates();
         }
 
         private void CrateListSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if(e.AddedItems.Count > 0)
+            {
+                CratePanel.DataContext = e.AddedItems[0];
+            }
         }
 
         private void AddCrate(object sender, RoutedEventArgs e)
         {
             storage.SaveCrate(new Crate("New Crate"));
+            updateUI();
+        }
+
+        private void SaveCrate(object sender, RoutedEventArgs e)
+        {
+            storage.SaveCrate((Crate)CratePanel.DataContext);
+            updateUI();
         }
     }
 }

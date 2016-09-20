@@ -6,15 +6,36 @@
         xmlns:local="clr-namespace:MysteryCrateEditor"
         mc:Ignorable="d"
         Title="MainWindow" Height="430.919" Width="790.181" Foreground="White">
-    <Grid Background="#B80C09">
+    <Grid Background="#FBFBFF">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="245*"/>
             <ColumnDefinition Width="281*"/>
             <ColumnDefinition Width="256*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Background="#040F16">
             <Button x:Name="Button" Content="Add New Crate" Width="Auto" Click="AddCrate"/>
-            <ListBox x:Name="CrateList" Background="#0B4F6C" SelectionChanged="CrateListSelectionChanged" Height="400">
+            <ListBox x:Name="CrateList" Foreground="White" Background="Transparent" SelectionChanged="CrateListSelectionChanged" VerticalAlignment="Stretch">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel DataContext="{Binding}" Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=Name}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <StackPanel Background="#0B4F6C" x:Name="CratePanel" Grid.Column="1">
+            <TextBlock Text="Name"/>
+            <TextBox Text="{Binding Name}"/>
+            <Grid>
+                <TextBlock Text="Rewards:"/>
+                <Button HorizontalAlignment="Right">Add new</Button>
+            </Grid>
+            <ListBox Background="Transparent" ItemsSource="{Binding Rewards}" x:Name="rewardsListBox">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"/>
@@ -22,10 +43,12 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </StackPanel>
-        <StackPanel x:Name="CratePanel" Grid.Column="1">
-            <TextBlock Text="Name"/>
-            <TextBox Text="{Binding Name}"/>
-            <ListBox x:Name="rewardsListBox"/>
+        <StackPanel x:Name="RewardPanel" Grid.Column="2" Background="#01BAEF">
+            
+        </StackPanel>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
+            <Button Content="Save Crate" Click="SaveCrate"/>
+            <Button Content="Delete Crate"/>
         </StackPanel>
     </Grid>
 </Window>
