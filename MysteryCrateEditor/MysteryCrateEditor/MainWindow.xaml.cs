@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MysteryCrateEditor.Libraries.MysteryCrates;
+using MysteryCrateEditor.Libraries.Storage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,23 @@ namespace MysteryCrateEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        IStorage storage;
         public MainWindow()
         {
             InitializeComponent();
+            // Initialize our storage and load our crates from memory
+            storage = new JSONStorage();
+            CrateList.DataContext = storage.GetCrates();
+        }
+
+        private void CrateListSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void AddCrate(object sender, RoutedEventArgs e)
+        {
+            storage.SaveCrate(new Crate("New Crate"));
         }
     }
 }

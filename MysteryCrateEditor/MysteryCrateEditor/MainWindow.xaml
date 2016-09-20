@@ -5,8 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MysteryCrateEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="MainWindow" Height="430.919" Width="790.181" Foreground="White">
+    <Grid Background="#B80C09">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="245*"/>
+            <ColumnDefinition Width="281*"/>
+            <ColumnDefinition Width="256*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical">
+            <Button x:Name="Button" Content="Add New Crate" Width="Auto" Click="AddCrate"/>
+            <ListBox x:Name="CrateList" Background="#0B4F6C" SelectionChanged="CrateListSelectionChanged" Height="400">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <StackPanel x:Name="CratePanel" Grid.Column="1">
+            <TextBlock Text="Name"/>
+            <TextBox Text="{Binding Name}"/>
+            <ListBox x:Name="rewardsListBox"/>
+        </StackPanel>
     </Grid>
 </Window>
