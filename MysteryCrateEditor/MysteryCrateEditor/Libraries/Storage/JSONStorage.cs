@@ -7,6 +7,7 @@ using MysteryCrateEditor.Libraries.MysteryCrate.Rewards;
 using MysteryCrateEditor.Libraries.MysteryCrates;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace MysteryCrateEditor.Libraries.Storage
 {
@@ -16,7 +17,20 @@ namespace MysteryCrateEditor.Libraries.Storage
     public class JSONStorage : IStorage
     {
         private List<Crate> _crates;
+
         #region interface_methods
+        public void DeleteCrate(Crate crate)
+        {
+            // This really should be it's own method...
+            string localPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MysteryCrateEditor/crates";
+            // Delete the crate :'(
+            string cratePath = $"{localPath}/{crate.Id}.json";
+            if(File.Exists(cratePath))
+            {
+                File.Delete(cratePath);
+            }
+        }
+
         public List<string> GetCrateNames()
         {
             if(_crates == null)
@@ -65,9 +79,12 @@ namespace MysteryCrateEditor.Libraries.Storage
                 using (StreamWriter writer = new StreamWriter(crateFile))
                 {
                     // Load our crate into a JObject
-                    JObject crateObject = JObject.FromObject(crate);
+                    string jsonData = JsonConvert.SerializeObject(crate, Newtonsoft.Json.Formatting.Indented, new JsonSerializerSettings()
+                    {
+                        TypeNameHandling = TypeNameHandling.All
+                    });
                     // Write it out to our file
-                    writer.Write(crateObject.ToString());
+                    writer.Write(jsonData);
                 }
             }
 
@@ -97,12 +114,10 @@ namespace MysteryCrateEditor.Libraries.Storage
                 // Make a new reader using that stream
                 using(StreamReader reader = new StreamReader(stream))
                 {
-                    // Read the contents of the file out to a string
-                    string fileContents = reader.ReadToEnd();
-                    // Make a JObject with the contents
-                    JObject output = JObject.Parse(fileContents);
-                    // Try and convert the JObject to a crate, this is a likely breaking point and should have error handling at some point.
-                    crate = output.ToObject<Crate>();
+                    // Deserialize the file into our crate
+                    crate = JsonConvert.DeserializeObject<Crate>(reader.ReadToEnd(), new JsonSerializerSettings() {
+                        TypeNameHandling = TypeNameHandling.Auto
+                    });
                 }
             }
         }

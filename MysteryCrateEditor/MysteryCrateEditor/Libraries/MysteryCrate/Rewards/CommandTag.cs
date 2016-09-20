@@ -10,7 +10,11 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
     public class CommandTag : TagBase
     {
         [JsonProperty("Command")]
-        public string Command;
+        public string Command { get; set; }
+        public CommandTag():base("cmd")
+        {
+
+        }
         public CommandTag(string command):base("cmd")
         {
             Command = command;

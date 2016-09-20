@@ -1,4 +1,5 @@
 ﻿using MysteryCrateEditor.Libraries.MysteryCrate.Rewards;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             Name = name;
         }
         public Guid Id { get; set; }
+        [JsonProperty(ItemTypeNameHandling = TypeNameHandling.Arrays)]
         public List<Reward> Rewards { get; set; }
         public string Name { get; set; }
     }

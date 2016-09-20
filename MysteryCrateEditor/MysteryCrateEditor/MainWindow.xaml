@@ -5,20 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MysteryCrateEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="430.919" Width="790.181" Foreground="White">
+        Title="Crate Editor" Height="430.919" Width="790.181" Foreground="White">
+    <Window.Resources>
+        <Style TargetType="ListBox">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Resources>
     <Grid Background="#FBFBFF">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="245*"/>
-            <ColumnDefinition Width="281*"/>
-            <ColumnDefinition Width="256*"/>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="280*"/>
+            <ColumnDefinition Width="280*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Vertical" Background="#040F16">
-            <Button x:Name="Button" Content="Add New Crate" Width="Auto" Click="AddCrate"/>
-            <ListBox x:Name="CrateList" Foreground="White" Background="Transparent" SelectionChanged="CrateListSelectionChanged" VerticalAlignment="Stretch">
+            <ListBox x:Name="CrateList" Background="Transparent" VerticalAlignment="Stretch">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel DataContext="{Binding}" Orientation="Horizontal">
@@ -28,14 +32,14 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </StackPanel>
-        <StackPanel Background="#0B4F6C" x:Name="CratePanel" Grid.Column="1">
+        <StackPanel Background="#0B4F6C" x:Name="CratePanel" Grid.Column="1" DataContext="{Binding SelectedValue, ElementName=CrateList}">
             <TextBlock Text="Name"/>
             <TextBox Text="{Binding Name}"/>
             <Grid>
                 <TextBlock Text="Rewards:"/>
-                <Button HorizontalAlignment="Right">Add new</Button>
+                <Button HorizontalAlignment="Right" Click="AddNewReward" Content="Add new"/>
             </Grid>
-            <ListBox Background="Transparent" ItemsSource="{Binding Rewards}" x:Name="rewardsListBox">
+            <ListBox Background="Transparent" ItemsSource="{Binding Rewards}" x:Name="RewardsListBox">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"/>
@@ -43,12 +47,32 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </StackPanel>
-        <StackPanel x:Name="RewardPanel" Grid.Column="2" Background="#01BAEF">
-            
+        <StackPanel x:Name="RewardPanel" Grid.Column="2" Background="#01BAEF" DataContext="{Binding SelectedValue, ElementName=RewardsListBox}">
+            <TextBlock Text="Name"/>
+            <TextBox Text="{Binding Name}"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Command" Click="NewCommand"/>
+                <Button Content="Item" Click="NewItem"/>
+                <Button Content="Display" Click="Display"/>
+            </StackPanel>
+            <ListBox x:Name="RewardTagsBox" ItemsSource="{Binding RewardTags}" Background="Transparent">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <TextBlock Text="{Binding TagName}"/>
+                            <TextBox Text="{Binding Command}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="1">
+            <Button Content="Save All" HorizontalAlignment="Right" Click="SaveAll_Click" />
+            <Button x:Name="Button" Content="Add New Crate" Width="Auto" Click="AddCrate"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
             <Button Content="Save Crate" Click="SaveCrate"/>
-            <Button Content="Delete Crate"/>
+            <Button Content="Delete Crate" Click="DeleteCrate"/>
         </StackPanel>
     </Grid>
 </Window>

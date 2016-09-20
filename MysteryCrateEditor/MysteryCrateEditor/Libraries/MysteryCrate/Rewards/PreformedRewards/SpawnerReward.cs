@@ -10,7 +10,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards.PreformedRewards
     {
         public static Reward SpawnerReward(ChanceTag chance, Mobs mob)
         {
-            var tagList = new List<IRewardTag>();
+            var tagList = new List<TagBase>();
             string mobName = char.ToUpper(mob.ToString()[0])+mob.ToString().Substring(1);
             tagList.Add(new DisplayTag() { Item = "mob_spawner", Amount = 1, Name = $"&e{mobName} Spawner" });
             tagList.Add(new CommandTag($"spawner {mob} 1 %player%"));

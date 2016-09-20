@@ -8,24 +8,16 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
 {
     public abstract class TagBase:IRewardTag
     {
+        public TagBase()
+        {
+
+        }
         public TagBase(string tagName)
         {
-            _tagName = tagName;
+            TagName = tagName;
         }
 
-        private string _tagName;
-        public string TagName
-        {
-            get
-            {
-                return _tagName;
-            }
-
-            set
-            {
-                _tagName = value;
-            }
-        }
+        public string TagName { get; set; }
 
         public string GetTag()
         { 

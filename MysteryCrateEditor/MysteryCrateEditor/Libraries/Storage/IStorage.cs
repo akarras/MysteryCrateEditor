@@ -12,6 +12,7 @@ namespace MysteryCrateEditor.Libraries.Storage
     {
         List<Crate> GetCrates();
         List<String> GetCrateNames();
+        void DeleteCrate(Crate crate);
         void SaveCrate(Crate crate);
     }
 }

@@ -9,10 +9,19 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
     public class Reward
     {
         public string Name { get; set; }
-        public List<IRewardTag> RewardTags { get; set; }
-        public Reward(ChanceTag chance, params IRewardTag[] tags)
+        public List<TagBase> RewardTags { get; set; }
+        public Reward()
         {
-            RewardTags = new List<IRewardTag>();
+            RewardTags = new List<TagBase>();
+        }
+        public Reward(string name)
+        {
+            Name = name;
+            RewardTags = new List<TagBase>();
+        }
+        public Reward(ChanceTag chance, params TagBase[] tags)
+        {
+            RewardTags = new List<TagBase>();
             foreach(var tag in tags)
             {
                 RewardTags.Add(tag);
