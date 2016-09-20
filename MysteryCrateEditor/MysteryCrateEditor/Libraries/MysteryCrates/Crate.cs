@@ -12,16 +12,17 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
     /// </summary>
     public class Crate
     {
-        public Crate()
+        public Crate(String name)
         {
             // Initialize our variables
-            id = Guid.NewGuid();
-            rewards = new List<Reward>();
+            Id = Guid.NewGuid();
+            Rewards = new List<Reward>();
+            Name = name;
         }
 
-        // Public variable, whaddaya gonna do about it?
-        public List<Reward> rewards;
-        public Guid id;
-        public String name;
+        // Public variables, whaddaya gonna do about it?
+        public List<Reward> Rewards;
+        public Guid Id;
+        public String Name;
     }
 }
