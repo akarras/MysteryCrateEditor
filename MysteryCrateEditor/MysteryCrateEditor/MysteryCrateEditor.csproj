@@ -67,6 +67,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Libraries\MysteryCrate\Converters\NullConverters.cs" />
+    <Compile Include="Libraries\MysteryCrate\Converters\VisibleParamter.cs" />
     <Compile Include="Libraries\MysteryCrate\Crate.cs" />
     <Compile Include="Libraries\MysteryCrate\Rewards\ArmorSets\ArmorSet.cs" />
     <Compile Include="Libraries\MysteryCrate\Rewards\BroadcastTag.cs" />

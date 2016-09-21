@@ -63,7 +63,6 @@ namespace MysteryCrateEditor
             if (CratePanel.DataContext is Crate)
             {
                 storage.DeleteCrate((Crate)CratePanel.DataContext);
-                CratePanel.DataContext = null;
                 updateUI();
             }
         }
@@ -127,6 +126,19 @@ namespace MysteryCrateEditor
             {
                 ((Reward)RewardPanel.DataContext).RewardTags.Add(new DisplayTag());
             }
+        }
+
+        private void RemoveSelected(object sender, RoutedEventArgs e)
+        {
+            if(RewardPanel.DataContext is Reward)
+            {
+                ((Reward)RewardPanel.DataContext).RewardTags.Remove((TagBase)RewardTagsBox.SelectedItem);
+            }
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            CrateTypeComboBox.ItemsSource = Enum.GetValues(typeof(CrateType));
         }
     }
 }
