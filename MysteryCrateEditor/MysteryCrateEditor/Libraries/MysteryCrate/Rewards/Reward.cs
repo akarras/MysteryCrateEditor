@@ -10,6 +10,21 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
     {
         public string Name { get; set; }
         public List<TagBase> RewardTags { get; set; }
+        public bool NeedsChance
+        {
+            get
+            {
+                // See if there's already a chance tag or not
+                foreach(TagBase reward in RewardTags)
+                {
+                    if(reward is ChanceTag)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
         public Reward()
         {
             RewardTags = new List<TagBase>();

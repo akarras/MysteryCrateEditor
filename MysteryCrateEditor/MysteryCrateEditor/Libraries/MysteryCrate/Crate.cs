@@ -20,6 +20,10 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             Id = Guid.NewGuid();
             Rewards = new List<Reward>();
             Name = name;
+            Shop = new CrateShop();
+            Message = new CrateMessages();
+            Effect = new CrateEffects();
+
         }
         public CrateType Type { get; set; }
         public Guid Id { get; set; }
@@ -30,7 +34,9 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
         public bool Preview { get; set; }
         public CrateShop Shop { get; set; }
         public CrateMessages Message { get; set; }
-        public CrateEffects effect { get; set; }
+        public CrateEffects Effect { get; set; }
+        public bool RaritiesEnabled { get; set; }
+        public List<CrateRarity> Rarities { get; set; }
         public void NotifyUpdate(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
@@ -41,6 +47,17 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+
+        public override string ToString()
+        {
+            string reward = "";
+            foreach (var item in Rewards)
+            {
+                reward += "            - \"" + item.GetReward() + "\"\n";
+            }
+            return reward;
+        }
     }
     public enum CrateType
     {
@@ -50,6 +67,11 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
         KEYCRATE,
         ROULETTEKEYCRATE,
         CSGOKEYCRATE
+    }
+    public class CrateRarity
+    {
+        public int Value { get; set; }
+        public string Name { get; set; }
     }
     public class CrateShop
     {

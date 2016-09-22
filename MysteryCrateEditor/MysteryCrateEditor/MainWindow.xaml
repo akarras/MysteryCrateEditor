@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MysteryCrateEditor"
         xmlns:converters="clr-namespace:MysteryCrateEditor.Libraries.MysteryCrate.Converters"
         mc:Ignorable="d"
-        Title="Crate Editor" Height="430.919" Width="790.181" Foreground="White" Loaded="OnLoaded">
+        Title="Crate Editor" Height="430.919" Width="790.181" Foreground="White" Loaded="OnLoaded" Closing="WindowClosing">
     <Window.Resources>
         <Style TargetType="ListBox">
             <Setter Property="Foreground" Value="White"/>
@@ -47,16 +47,22 @@
             <TextBlock Text="Display Name"/>
             <TextBox Text="{Binding DisplayName}"/>
             <CheckBox IsChecked="{Binding Preview}" Content="Is Preview Enabled?"/>
-            <Grid DataContext="{Binding Shop}">
-                <CheckBox IsChecked="{Binding Enabled}" Content="Shop Enabled"/>
+            <Grid>
+                <CheckBox IsChecked="{Binding Shop.Enabled}" Content="Shop Enabled"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock Text="Price:"/>
-                    <TextBox HorizontalAlignment="Right" Width="100" IsEnabled="{Binding Enabled}" Text="{Binding Shop.Buy}" Height="18"/>
+                    <TextBox HorizontalAlignment="Right" Width="100" IsEnabled="{Binding Shop.Enabled}" Text="{Binding Shop.Buy}" Height="18"/>
                 </StackPanel>
             </Grid>
+            <TextBlock Text="Chance settings:"/>
+            <CheckBox Content="Use global chance"/>
+            <CheckBox Content="Add rarity tags"/>
             <Grid>
                 <TextBlock Text="Rewards:"/>
-                <Button HorizontalAlignment="Right" Click="AddNewReward" Content="Add new"/>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Click="AddNewReward" Content="Add new" Height="20"/>
+                    <Button Click="RemoveSelectedReward" Content="Remove" IsEnabled="{Binding SelectedItem, ElementName=RewardsListBox, Converter={StaticResource nullToBool}}"/>
+                </StackPanel>
             </Grid>
             <ListBox Background="Transparent" ItemsSource="{Binding Rewards}" x:Name="RewardsListBox">
                 <ListBox.ItemTemplate>
@@ -70,6 +76,7 @@
             <TextBlock Text="Name"/>
             <TextBox Text="{Binding Name}"/>
             <StackPanel Orientation="Horizontal">
+                <Button Content="Chance" Click="NewChance" IsEnabled="{Binding NeedsChance}"/>
                 <Button Content="Command" Click="NewCommand"/>
                 <Button Content="Item" Click="NewItem"/>
                 <Button Content="Display" Click="Display"/>
@@ -79,9 +86,12 @@
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Stretch">
                             <TextBlock Text="{Binding TagName}"/>
-                            <StackPanel x:Name="TagNames" Visibility="{Binding TagName, Converter={StaticResource visibleParameter},ConverterParameter=cmd}">
-                                <TextBox Text="{Binding Command}" Visibility="{Binding Command, Converter={StaticResource nullToVis}}"/>
+                            <StackPanel x:Name="ChanceStackPanel" Visibility="{Binding TagName, Converter={StaticResource visibleParameter},ConverterParameter=chance}">
+                                <TextBox Text="{Binding Chance}" Width="50"/>
                             </StackPanel>
+                            <Grid x:Name="CmdStackPanel" Visibility="{Binding TagName, Converter={StaticResource visibleParameter},ConverterParameter=cmd}">
+                                <TextBox HorizontalAlignment="Stretch" Text="{Binding Command}"/>
+                            </Grid>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -92,8 +102,9 @@
             <Button x:Name="Button" Content="Add New Crate" Width="Auto" Click="AddCrate"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
-            <Button IsEnabled="{Binding DataContext, ElementName=CratePanel, Converter={StaticResource nullToBool}}" Content="Save Crate" Click="SaveCrate" />
-            <Button IsEnabled="{Binding DataContext, ElementName=CratePanel, Converter={StaticResource nullToBool}}" Content="Delete Crate" Click="DeleteCrate"/>
+            <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Export Crate" Click="ExportCrate" />
+            <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Save Crate" Click="SaveCrate" />
+            <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Delete Crate" Click="DeleteCrate"/>
         </StackPanel>
         <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button IsEnabled="{Binding DataContext, ElementName=RewardPanel, Converter={StaticResource nullToBool}}" Content="Remove Selected" Click="RemoveSelected"/>

@@ -25,27 +25,80 @@ namespace MysteryCrateEditor
     public partial class MainWindow : Window
     {
         IStorage storage;
+        List<Crate> crates;
         public MainWindow()
         {
             InitializeComponent();
             // Initialize our storage and load our crates from memory
             storage = new JSONStorage();
+            loadData();
             updateUI();
+        }
+
+        private void loadData()
+        {
+            if (crates != null)
+            {
+                var tempCrates = storage.GetCrates();
+                if (tempCrates != crates)
+                {
+                    // User has made changes to the crates, we should ask if they wish to save new changes
+                    MessageBoxResult result = MessageBox.Show("Would you like to save your changes?", "Changes made", MessageBoxButton.YesNoCancel);
+                    switch (result)
+                    {
+                        case MessageBoxResult.Yes:
+                            // Save all of our crates and then reload from the configuration
+                            foreach (Crate crate in crates)
+                            {
+                                storage.SaveCrate(crate);
+                            }
+                            crates = storage.GetCrates();
+                            break;
+                        case MessageBoxResult.No:
+                            // Simply use the new crates as the user didn't request a save.
+                            crates = tempCrates;
+                            break;
+                        case MessageBoxResult.Cancel:
+                            // Do nothing!
+                            return;
+                    }
+                }
+            }
+            else
+            {
+                crates = storage.GetCrates();
+            }
         }
 
         private void updateUI()
         {
             int crateListIndex = CrateList.SelectedIndex;
-            CrateList.ItemsSource = storage.GetCrates();
+            int crateRewardIndex = RewardsListBox.SelectedIndex;
+            if(CrateList.ItemsSource != null)
+            {
+                // Set the items source to null so that the rest of the bindings will update
+                // The better solution to this would be to make all of the subclasses observable
+                // But for now this works
+                CrateList.ItemsSource = null;
+            }
+
+            CrateList.ItemsSource = crates;
+            // Redo our selected indexes
             if (CrateList.Items.Count > crateListIndex)
             {
                 CrateList.SelectedIndex = crateListIndex;
+            }
+            if (RewardsListBox.Items.Count > crateRewardIndex)
+            {
+                RewardsListBox.SelectedIndex = crateRewardIndex;
             }
         }
 
         private void AddCrate(object sender, RoutedEventArgs e)
         {
-            storage.SaveCrate(new Crate("New Crate"));
+            Crate newCrate = new Crate("New Crate");
+            crates.Add(newCrate);
+            storage.SaveCrate(newCrate);
             updateUI();
         }
 
@@ -63,6 +116,7 @@ namespace MysteryCrateEditor
             if (CratePanel.DataContext is Crate)
             {
                 storage.DeleteCrate((Crate)CratePanel.DataContext);
+                crates.Remove((Crate)CratePanel.DataContext);
                 updateUI();
             }
         }
@@ -74,6 +128,7 @@ namespace MysteryCrateEditor
                 if(CratePanel.DataContext is Crate) 
                 {
                     ((Crate)CratePanel.DataContext).Rewards.Add(new Reward("New Reward"));
+                    updateUI();
                 }
             }
         }
@@ -93,22 +148,7 @@ namespace MysteryCrateEditor
             if(RewardPanel.DataContext is Reward)
             {
                 ((Reward)RewardPanel.DataContext).RewardTags.Add(new CommandTag());
-            }
-        }
-
-        private void TagContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            // Use reflection to set the item source of our list box
-            PropertyInfo[] info = e.NewValue.GetType().GetProperties();
-            List<string> infos = new List<string>();
-            foreach(PropertyInfo inf in info)
-            {
-                infos.Add(inf.GetValue(e.NewValue).ToString());
-            }
-            if (sender is ListBox)
-            {
-                
-                ((ListBox)sender).ItemsSource = infos;
+                updateUI();
             }
         }
 
@@ -117,6 +157,7 @@ namespace MysteryCrateEditor
             if(RewardPanel.DataContext is Reward)
             {
                 ((Reward)RewardPanel.DataContext).RewardTags.Add(new ItemTag());
+                updateUI();
             }
         }
 
@@ -125,6 +166,7 @@ namespace MysteryCrateEditor
             if(RewardPanel.DataContext is Reward)
             {
                 ((Reward)RewardPanel.DataContext).RewardTags.Add(new DisplayTag());
+                updateUI();
             }
         }
 
@@ -133,12 +175,68 @@ namespace MysteryCrateEditor
             if(RewardPanel.DataContext is Reward)
             {
                 ((Reward)RewardPanel.DataContext).RewardTags.Remove((TagBase)RewardTagsBox.SelectedItem);
+                updateUI();
             }
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             CrateTypeComboBox.ItemsSource = Enum.GetValues(typeof(CrateType));
+        }
+
+        private void ExportCrate(object sender, RoutedEventArgs e)
+        {
+            if(CratePanel.DataContext is Crate)
+            {
+                Crate crate = (Crate)CratePanel.DataContext;
+                // Should probably make a new window to show this in that allows the user to copy+paste it into their config.
+                // Once more developed, I should also add a export all button.
+                MessageBox.Show(crate.ToString());
+            }
+        }
+
+        private void RemoveSelectedReward(object sender, RoutedEventArgs e)
+        {
+            if(RewardsListBox.SelectedItem is Reward)
+            {
+                // Removes the currently selected reward from the crate
+                ((Crate)CrateList.SelectedItem).Rewards.Remove((Reward)RewardsListBox.SelectedItem);
+                updateUI();
+            }
+        }
+
+        private void NewChance(object sender, RoutedEventArgs e)
+        {
+            ((Reward)RewardPanel.DataContext).RewardTags.Add(new ChanceTag(1));
+            updateUI();
+        }
+
+        private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            List<Crate> tmpCrates = storage.GetCrates();
+            if(crates != null)
+            {
+                if(tmpCrates != crates)
+                {
+                    MessageBoxResult result = MessageBox.Show("Would you like to save your changes?", "Changes made", MessageBoxButton.YesNoCancel);
+                    switch (result)
+                    {
+                        case MessageBoxResult.Yes:
+                            // Save all of our crates
+                            foreach (Crate crate in crates)
+                            {
+                                storage.SaveCrate(crate);
+                            }
+                            break;
+                        case MessageBoxResult.No:
+                            // Do nothing! Muhaha!
+                            break;
+                        case MessageBoxResult.Cancel:
+                            e.Cancel = true;
+                            return;
+                    }
+                }
+            }
         }
     }
 }

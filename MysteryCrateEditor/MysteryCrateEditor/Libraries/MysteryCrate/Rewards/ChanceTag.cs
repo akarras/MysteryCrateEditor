@@ -10,7 +10,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
     public class ChanceTag : TagBase
     {
         [JsonProperty("Chance")]
-        public int Chance;
+        public int Chance { get; set; }
         public ChanceTag(int chance) : base("chance")
         {
             Chance = chance;
