@@ -13,7 +13,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
         public string Command { get; set; }
         public CommandTag():base("cmd")
         {
-
+            Command = "";
         }
         public CommandTag(string command):base("cmd")
         {
