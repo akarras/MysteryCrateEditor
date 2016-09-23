@@ -24,7 +24,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
         [JsonProperty("Enchants")]
         public List<EnchantData> Enchants { get; set; }
         [JsonProperty("ColorData")]
-        public ColorData ColorData { get; set; }
+        public ColorData Colors { get; set; }
         public ItemTag() : base("item")
         {
             // Initialize variables
@@ -32,7 +32,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
             Amount = 1;
             Lore = new List<string>();
             Enchants = new List<EnchantData>();
-            ColorData = new ColorData();
+            Colors = new ColorData();
         }
 
         public ItemTag(string item, int amount) : base("item")
@@ -42,7 +42,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
             Amount = amount;
             Lore = new List<string>();
             Enchants = new List<EnchantData>();
-            ColorData = new ColorData();
+            Colors = new ColorData();
         }
 
         public string getGiveCommand(string MinecraftUser, int Durability = 0)
