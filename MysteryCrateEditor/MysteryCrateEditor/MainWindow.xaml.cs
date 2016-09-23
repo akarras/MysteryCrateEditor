@@ -113,6 +113,9 @@ namespace MysteryCrateEditor
 
         private void DeleteCrate(object sender, RoutedEventArgs e)
         {
+            var result = MessageBox.Show("Deleting the crate is irreversable", "Are you sure?", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No)
+                return;
             if (CratePanel.DataContext is Crate)
             {
                 storage.DeleteCrate((Crate)CratePanel.DataContext);
