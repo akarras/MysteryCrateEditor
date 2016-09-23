@@ -14,32 +14,35 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
     public class ItemTag : TagBase
     {
         [JsonProperty("Item")]
-        public string Item;
+        public string Item { get; set; }
         [JsonProperty("Amount")]
-        public int Amount = 1;
+        public int Amount { get; set; }
         [JsonProperty("Name")]
-        public string Name;
+        public string Name { get; set; }
         [JsonProperty("Lore")]
-        public List<string> Lore;
+        public List<string> Lore { get; set; }
         [JsonProperty("Enchants")]
-        public List<EnchantData> Enchants;
+        public List<EnchantData> Enchants { get; set; }
         [JsonProperty("ColorData")]
-        public ColorData Colors;
+        public ColorData ColorData { get; set; }
         public ItemTag() : base("item")
         {
-            
-
-        }
-
-        public ItemTag(string tag) : base(tag)
-        {
-
+            // Initialize variables
+            Item = "New Item";
+            Amount = 1;
+            Lore = new List<string>();
+            Enchants = new List<EnchantData>();
+            ColorData = new ColorData();
         }
 
         public ItemTag(string item, int amount) : base("item")
         {
+            // Initialize variables
             Item = item;
             Amount = amount;
+            Lore = new List<string>();
+            Enchants = new List<EnchantData>();
+            ColorData = new ColorData();
         }
 
         public string getGiveCommand(string MinecraftUser, int Durability = 0)
