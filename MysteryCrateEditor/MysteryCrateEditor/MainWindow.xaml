@@ -81,7 +81,7 @@
                 <Button Content="Item" Click="NewItem"/>
                 <Button Content="Display" Click="Display"/>
             </StackPanel>
-            <ListBox x:Name="RewardTagsBox" ItemsSource="{Binding RewardTags}" Background="Transparent">
+            <ListBox HorizontalAlignment="Stretch" x:Name="RewardTagsBox" ItemsSource="{Binding RewardTags}" Background="Transparent">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Stretch">
@@ -89,8 +89,46 @@
                             <StackPanel x:Name="ChanceStackPanel" Visibility="{Binding TagName, Converter={StaticResource visibleParameter},ConverterParameter=chance}">
                                 <TextBox Text="{Binding Chance}" Width="50"/>
                             </StackPanel>
-                            <Grid x:Name="CmdStackPanel" Visibility="{Binding TagName, Converter={StaticResource visibleParameter},ConverterParameter=cmd}">
+                            <Grid HorizontalAlignment="Stretch" x:Name="CmdStackPanel" Visibility="{Binding TagName, Converter={StaticResource visibleParameter},ConverterParameter=cmd}">
                                 <TextBox HorizontalAlignment="Stretch" Text="{Binding Command}"/>
+                            </Grid>
+                            <Grid Visibility="{Binding TagName, Converter={StaticResource visibleParameter},ConverterParameter=item}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120*"/>
+                                    <ColumnDefinition Width="120*"/>
+                                    <ColumnDefinition Width="120*"/>
+                                    <ColumnDefinition Width="120*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Item: "/>
+                                <TextBox Text="{Binding Item}" Grid.Column="1"/>
+                                <TextBlock Text="Amount: " Grid.Column="2"/>
+                                <TextBox Text="{Binding Amount}" Width="75" Grid.Column="3"/>
+                                <TextBlock Text="Name: " Grid.Row="2"/>
+                                <TextBox Text="{Binding Name}" Width="200" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"/>
+                                <TextBlock Text="Lore" Grid.Row="3"/>
+                                <TextBlock Text="Enchants" Grid.Row="3" Grid.Column="2"/>
+                                <Button Content="Add Lore" Click="AddLore" Grid.Row="3" Grid.Column="1"/>
+                                <ListBox x:Name="LoreListBox" ItemsSource="{Binding Lore}" Background="Transparent" Grid.Row="4" Grid.ColumnSpan="2">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <ListBox x:Name="EnchantsListBox" ItemsSource="{Binding Enchants}" Background="Transparent" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Enchant}"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
                             </Grid>
                         </StackPanel>
                     </DataTemplate>

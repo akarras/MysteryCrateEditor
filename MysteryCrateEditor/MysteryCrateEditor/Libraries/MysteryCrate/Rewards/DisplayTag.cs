@@ -8,11 +8,13 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
 {
     public class DisplayTag:ItemTag
     {
-        public DisplayTag() : base("display")
+        public DisplayTag()
         {
+            TagName = "display";
         }
-        public DisplayTag(string item, int amount):base("display")
+        public DisplayTag(string item, int amount)
         {
+            TagName = "display";
             Item = item;
             Amount = amount;
         }

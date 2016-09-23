@@ -238,5 +238,21 @@ namespace MysteryCrateEditor
                 }
             }
         }
+
+        private void AddLore(object sender, RoutedEventArgs e)
+        {
+            if(sender is Button)
+            {
+                Button sendyButton = (Button)sender;
+                if(sendyButton.DataContext is ItemTag)
+                {
+                    if(((ItemTag)sendyButton.DataContext).Lore == null)
+                    {
+                        ((ItemTag)sendyButton.DataContext).Lore = new List<string>();
+                    }
+                    ((ItemTag)sendyButton.DataContext).Lore.Add("New Lore");
+                }
+            }
+        }
     }
 }

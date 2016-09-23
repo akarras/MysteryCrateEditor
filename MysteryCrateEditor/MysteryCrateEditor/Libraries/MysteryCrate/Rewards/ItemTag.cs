@@ -32,7 +32,6 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
             Amount = 1;
             Lore = new List<string>();
             Enchants = new List<EnchantData>();
-            Colors = new ColorData();
         }
 
         public ItemTag(string item, int amount) : base("item")
@@ -42,7 +41,6 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
             Amount = amount;
             Lore = new List<string>();
             Enchants = new List<EnchantData>();
-            Colors = new ColorData();
         }
 
         public string getGiveCommand(string MinecraftUser, int Durability = 0)
