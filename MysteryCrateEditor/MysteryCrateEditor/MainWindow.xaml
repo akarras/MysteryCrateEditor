@@ -17,6 +17,7 @@
         <converters:NullToVisibilityConverter x:Key="nullToVis"/>
         <converters:NullToBoolConverter x:Key="nullToBool"/>
         <converters:VisibleParamter x:Key="visibleParameter"/>
+        <converters:BoolToVis x:Key="boolToVis"/>
     </Window.Resources>
     <Grid Background="#FBFBFF">
         <Grid.RowDefinitions>
@@ -55,12 +56,32 @@
                 </StackPanel>
             </Grid>
             <TextBlock Text="Chance settings:"/>
-            <CheckBox Content="Use global chance"/>
-            <CheckBox Content="Add rarity tags"/>
+            <CheckBox Content="Add rarity tags" IsChecked="{Binding RaritiesEnabled}" Name="RarityTags"/>
+            <StackPanel x:Name="RaritiesStackPanel" Visibility="{Binding IsChecked,ElementName=RarityTags, Converter={StaticResource boolToVis}}">
+                <TextBlock Text="Rarities"/>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Content="Add Rarity" Click="AddRarity"/>
+                    <Button Content="Remove" Click="RemoveRarity" IsEnabled="{Binding SelectedItem,ElementName=RaritiesListBox,Converter={StaticResource nullToBool}}"/>
+                </StackPanel>
+                <ListBox Background="Transparent" x:Name="RaritiesListBox" ItemsSource="{Binding Rarities}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80*"/>
+                                    <ColumnDefinition Width="200*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{Binding Value}" Width="50"/>
+                                <TextBox Text="{Binding Name}" Grid.Column="1" Width="150"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
             <Grid>
                 <TextBlock Text="Rewards:"/>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button Click="AddNewReward" Content="Add new" Height="20"/>
+                    <Button Click="AddNewReward" Content="Add Reward" Height="20"/>
                     <Button Click="RemoveSelectedReward" Content="Remove" IsEnabled="{Binding SelectedItem, ElementName=RewardsListBox, Converter={StaticResource nullToBool}}"/>
                 </StackPanel>
             </Grid>
@@ -76,6 +97,7 @@
             <TextBlock Text="Name"/>
             <TextBox Text="{Binding Name}"/>
             <StackPanel Orientation="Horizontal">
+                <Button Content="Macros" Click="Macros"/>
                 <Button Content="Chance" Click="NewChance" IsEnabled="{Binding NeedsChance}"/>
                 <Button Content="Command" Click="NewCommand"/>
                 <Button Content="Item" Click="NewItem"/>

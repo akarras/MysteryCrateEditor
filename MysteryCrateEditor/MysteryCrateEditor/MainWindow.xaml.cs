@@ -257,5 +257,27 @@ namespace MysteryCrateEditor
                 }
             }
         }
+
+        private void Macros(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void AddRarity(object sender, RoutedEventArgs e)
+        {
+            if(((Crate)CratePanel.DataContext).Rarities == null)
+            {
+                // Make a new list of these because a few of my files never had them initialized ¯\_(ツ)_/¯
+                ((Crate)CratePanel.DataContext).Rarities = new List<CrateRarity>();
+            }
+            ((Crate)CratePanel.DataContext).Rarities.Add(new CrateRarity() { Name = "New Rarity", Value = 0 });
+            updateUI();
+        }
+
+        private void RemoveRarity(object sender, RoutedEventArgs e)
+        {
+            ((Crate)CratePanel.DataContext).Rarities.Remove((CrateRarity)RaritiesListBox.SelectedValue);
+            updateUI();
+        }
     }
 }
