@@ -23,7 +23,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             Shop = new CrateShop();
             Message = new CrateMessages();
             Effect = new CrateEffects();
-
+            Rarities = new List<CrateRarity>();
         }
         public CrateType Type { get; set; }
         public Guid Id { get; set; }
