@@ -68,6 +68,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Libraries\MysteryCrate\Converters\BoolToVis.cs" />
+    <Compile Include="Libraries\MysteryCrate\Converters\EnumExtension.cs" />
     <Compile Include="Libraries\MysteryCrate\Converters\NullConverters.cs" />
     <Compile Include="Libraries\MysteryCrate\Converters\VisibleParamter.cs" />
     <Compile Include="Libraries\MysteryCrate\Crate.cs" />

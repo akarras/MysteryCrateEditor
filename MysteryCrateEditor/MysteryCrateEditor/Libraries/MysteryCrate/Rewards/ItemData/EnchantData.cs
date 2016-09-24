@@ -10,8 +10,8 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData
 {
     public class EnchantData
     {
-        public MinecraftEnchants Enchant;
-        public int Strength;
+        public MinecraftEnchants Enchant { get; set; }
+        public int Strength { get; set; }
         public override string ToString()
         {
             return $"{(int)Enchant}:{Strength}";
@@ -37,6 +37,12 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData
                 default:
                     return true;
             }
+        }
+
+        public EnchantData()
+        {
+            this.Enchant = MinecraftEnchants.AquaAffinity;
+            this.Strength = 1;
         }
 
         public EnchantData(MinecraftEnchants Enchant, int Strength)

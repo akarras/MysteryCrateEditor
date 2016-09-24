@@ -1,4 +1,5 @@
 ﻿using MysteryCrateEditor.Libraries.MysteryCrate.Rewards;
+using MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData;
 using MysteryCrateEditor.Libraries.MysteryCrates;
 using MysteryCrateEditor.Libraries.Storage;
 using System;
@@ -255,6 +256,7 @@ namespace MysteryCrateEditor
                     }
                     ((ItemTag)sendyButton.DataContext).Lore.Add("New Lore");
                 }
+                updateUI();
             }
         }
 
@@ -278,6 +280,33 @@ namespace MysteryCrateEditor
         {
             ((Crate)CratePanel.DataContext).Rarities.Remove((CrateRarity)RaritiesListBox.SelectedValue);
             updateUI();
+        }
+
+        private void AddEnchantButton(object sender, RoutedEventArgs e)
+        {
+            if(sender is Button)
+            {
+                Button sendyButton = (Button)sender;
+                if(sendyButton.DataContext is ItemTag)
+                {
+                    ((ItemTag)sendyButton.DataContext).Enchants.Add(new EnchantData());
+                    updateUI();
+                }
+            }
+        }
+
+        private void RemoveEnchantButton(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button)
+            {
+                Button sendyButton = (Button)sender;
+                if (sendyButton.DataContext is ListBox)
+                {
+                    ListBox listy = (ListBox)sendyButton.DataContext;
+                    ((ItemTag)listy.DataContext).Enchants.Remove((EnchantData)listy.SelectedItem);
+                    updateUI();
+                }
+            }
         }
     }
 }

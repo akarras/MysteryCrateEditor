@@ -4,10 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MysteryCrateEditor"
+        xmlns:sys="clr-namespace:System;assembly=mscorelib"
         xmlns:converters="clr-namespace:MysteryCrateEditor.Libraries.MysteryCrate.Converters"
+        xmlns:itemData="clr-namespace:MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData"
         mc:Ignorable="d"
         Title="Crate Editor" Height="430.919" Width="790.181" MinWidth="700" MinHeight="275" Foreground="White" Loaded="OnLoaded" Closing="WindowClosing">
     <Window.Resources>
+        
         <Style TargetType="ListBox">
             <Setter Property="Foreground" Value="White"/>
         </Style>
@@ -18,6 +21,7 @@
         <converters:NullToBoolConverter x:Key="nullToBool"/>
         <converters:VisibleParamter x:Key="visibleParameter"/>
         <converters:BoolToVis x:Key="boolToVis"/>
+        
     </Window.Resources>
     <Grid Background="#FBFBFF">
         <Grid.RowDefinitions>
@@ -126,6 +130,8 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                         <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="120*"/>
@@ -140,19 +146,24 @@
                                     <TextBlock Text="Name: " Grid.Row="2"/>
                                     <TextBox Text="{Binding Name}" Width="200" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"/>
                                     <TextBlock Text="Lore" Grid.Row="3"/>
-                                    <TextBlock Text="Enchants" Grid.Row="3" Grid.Column="2"/>
                                     <Button Content="Add Lore" Click="AddLore" Grid.Row="3" Grid.Column="1"/>
-                                    <ListBox x:Name="LoreListBox" ItemsSource="{Binding Lore}" Background="Transparent" Grid.Row="4" Grid.ColumnSpan="2">
+                                    <ListBox x:Name="LoreListBox" ItemsSource="{Binding Lore}" Background="Transparent" Grid.Row="4" Grid.ColumnSpan="4">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding}"/>
+                                                <TextBox Text="{Binding Path=self}"/>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
-                                    <ListBox x:Name="EnchantsListBox" ItemsSource="{Binding Enchants}" Background="Transparent" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2">
+                                    <TextBlock Text="Enchants" Grid.Row="5"/>
+                                    <Button Content="Add Enchant" Grid.Row="5" Grid.Column="2" x:Name="AddEnchantButton" Click="AddEnchantButton"/>
+                                    <Button Content="Remove Enchant" Grid.Row="5" Grid.Column="3" x:Name="RemoveEnchantButton" Click="RemoveEnchantButton" DataContext="{Binding ElementName=EnchantsListBox}" IsEnabled="{Binding SelectedItem, ElementName=EnchantsListBox, Converter={StaticResource nullToBool}}"/>
+                                    <ListBox x:Name="EnchantsListBox" ItemsSource="{Binding Enchants}" Background="Transparent" Grid.Row="6" Grid.ColumnSpan="4">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Enchant}"/>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Width="70" Text="{Binding Strength}"/>
+                                                    <ComboBox Width="175" ItemsSource="{Binding Source={converters:Enum {x:Type itemData:MinecraftEnchants}}}" SelectedItem="{Binding Enchant}"/>
+                                                </StackPanel>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
