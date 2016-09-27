@@ -106,7 +106,7 @@
                 <TextBlock Text="Name"/>
                 <TextBox Text="{Binding Name}"/>
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="Macros" Click="Macros"/>
+                    <Button Content="Macros" Click="InsertMacro"/>
                     <Button Content="Chance" Click="NewChance" IsEnabled="{Binding NeedsChance}"/>
                     <Button Content="Command" Click="NewCommand"/>
                     <Button Content="Item" Click="NewItem"/>
@@ -150,7 +150,7 @@
                                     <ListBox x:Name="LoreListBox" ItemsSource="{Binding Lore}" Background="Transparent" Grid.Row="4" Grid.ColumnSpan="4">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBox Text="{Binding Path=self}"/>
+                                                <TextBox Text="{Binding String}"/>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
@@ -184,6 +184,7 @@
             <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Delete Crate" Click="DeleteCrate"/>
         </StackPanel>
         <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=RewardPanel}" Content="Edit Macros" Click="EditMacros"/>
             <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=RewardPanel}" Content="Remove Selected" Click="RemoveSelected"/>
         </StackPanel>
     </Grid>

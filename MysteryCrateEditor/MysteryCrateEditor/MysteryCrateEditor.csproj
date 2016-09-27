@@ -59,6 +59,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="MacroEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MacroPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -84,9 +92,17 @@
     <Compile Include="Libraries\MysteryCrate\Rewards\MinecraftJson\MojangItem.cs" />
     <Compile Include="Libraries\MysteryCrate\Rewards\PreformedRewards\SpawnerReward.cs" />
     <Compile Include="Libraries\MysteryCrate\Rewards\Reward.cs" />
+    <Compile Include="Libraries\MysteryCrate\Rewards\RewardMacro.cs" />
     <Compile Include="Libraries\MysteryCrate\Rewards\Tag.cs" />
     <Compile Include="Libraries\Storage\IStorage.cs" />
     <Compile Include="Libraries\Storage\JSONStorage.cs" />
+    <Compile Include="Libraries\Storage\MacroStorage.cs" />
+    <Compile Include="MacroEditor.xaml.cs">
+      <DependentUpon>MacroEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MacroPicker.xaml.cs">
+      <DependentUpon>MacroPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

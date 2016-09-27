@@ -308,5 +308,17 @@ namespace MysteryCrateEditor
                 }
             }
         }
+
+        private void EditMacros(object sender, RoutedEventArgs e)
+        {
+            MacroEditor editor = new MacroEditor();
+            editor.ShowDialog();
+        }
+
+        private void InsertMacro(object sender, RoutedEventArgs e)
+        {
+            MacroPicker picker = new MacroPicker();
+            picker.ShowDialog();
+        }
     }
 }
