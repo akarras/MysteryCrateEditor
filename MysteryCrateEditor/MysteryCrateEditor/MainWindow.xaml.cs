@@ -320,5 +320,25 @@ namespace MysteryCrateEditor
             MacroPicker picker = new MacroPicker();
             picker.ShowDialog();
         }
+
+        private void DuplicateSelectedReward(object sender, RoutedEventArgs e)
+        {
+            if (RewardsListBox.SelectedItem is Reward)
+            {
+                // Make a new version of Reward but copy all of the data over from the other one
+                Reward reward = new Reward();
+                reward.Name = "Duplicate ";
+                Reward otherReward = (Reward)RewardsListBox.SelectedItem;
+                reward.Name = otherReward.Name;
+                reward.RewardTags = new List<TagBase>();
+                foreach(var rewardTag in otherReward.RewardTags)
+                {
+                    reward.RewardTags.Add(rewardTag);
+                }
+                reward.Name = otherReward.Name + " (1)";
+                ((Crate)CrateList.SelectedItem).Rewards.Add(reward);
+                updateUI();
+            }
+        }
     }
 }

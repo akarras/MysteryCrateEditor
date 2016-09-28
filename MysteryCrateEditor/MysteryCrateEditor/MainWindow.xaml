@@ -89,6 +89,7 @@
                     <TextBlock Text="Rewards:"/>
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                         <Button Click="AddNewReward" Content="Add Reward" Height="20"/>
+                        <Button Click="DuplicateSelectedReward" Content="Duplicate" IsEnabled="{Binding SelectedItem, Converter={StaticResource nullToBool}, ElementName=RewardsListBox}"/>
                         <Button Click="RemoveSelectedReward" Content="Remove" IsEnabled="{Binding SelectedItem, Converter={StaticResource nullToBool}, ElementName=RewardsListBox}"/>
                     </StackPanel>
                 </Grid>
