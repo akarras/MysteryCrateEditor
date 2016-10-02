@@ -91,10 +91,9 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
             // Copy the edit lore to the string array container
             if (EditLore != null)
             {
-                foreach (LoreContainer lore in EditLore)
-                {
-                    Lore.Add(lore.Lore);
-                }
+                var selection = from lore in EditLore
+                                select lore.Lore;
+                Lore.InsertRange(0, selection);
             }
 
 
