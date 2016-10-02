@@ -21,6 +21,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
         public string Name { get; set; }
         [JsonProperty("Lore")]
         public List<string> Lore { get; set; }
+        public List<LoreContainer> EditLore { get; set; }
         [JsonProperty("Enchants")]
         public List<EnchantData> Enchants { get; set; }
         [JsonProperty("ColorData")]
@@ -39,6 +40,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
             // Initialize variables
             Item = item;
             Amount = amount;
+            EditLore = new List<LoreContainer>();
             Lore = new List<string>();
             Enchants = new List<EnchantData>();
         }
@@ -86,6 +88,16 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
 
         public override string GetTagContents()
         {
+            // Copy the edit lore to the string array container
+            if (EditLore != null)
+            {
+                foreach (LoreContainer lore in EditLore)
+                {
+                    Lore.Add(lore.Lore);
+                }
+            }
+
+
             List<string> parts = new List<string>();
             parts.Add(Item);
             parts.Add(Amount.ToString());
@@ -104,5 +116,9 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
             item = item.Replace(" -", "");
             return item;
         }
+    }
+    public class LoreContainer
+    {
+        public string Lore { get; set; }
     }
 }

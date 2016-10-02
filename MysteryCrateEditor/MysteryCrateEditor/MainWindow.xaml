@@ -149,10 +149,13 @@
                                     <TextBox Text="{Binding Name}" Width="200" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"/>
                                     <TextBlock Text="Lore" Grid.Row="3"/>
                                     <Button Content="Add Lore" Click="AddLore" Grid.Row="3" Grid.Column="1"/>
-                                    <ListBox x:Name="LoreListBox" ItemsSource="{Binding Lore}" Background="Transparent" Grid.Row="4" Grid.ColumnSpan="4">
+                                    <ListBox x:Name="LoreListBox" ItemsSource="{Binding EditLore}" Background="Transparent" Grid.Row="4" Grid.ColumnSpan="4"
+                                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBox Text="{Binding String}"/>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox HorizontalAlignment="Stretch" Text="{Binding Lore}"/>
+                                                </StackPanel>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>

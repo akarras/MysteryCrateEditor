@@ -250,11 +250,11 @@ namespace MysteryCrateEditor
                 Button sendyButton = (Button)sender;
                 if(sendyButton.DataContext is ItemTag)
                 {
-                    if(((ItemTag)sendyButton.DataContext).Lore == null)
+                    if(((ItemTag)sendyButton.DataContext).EditLore == null)
                     {
-                        ((ItemTag)sendyButton.DataContext).Lore = new List<string>();
+                        ((ItemTag)sendyButton.DataContext).EditLore = new List<LoreContainer>();
                     }
-                    ((ItemTag)sendyButton.DataContext).Lore.Add("New Lore");
+                    ((ItemTag)sendyButton.DataContext).EditLore.Add(new LoreContainer() { Lore = "New Lore" });
                 }
                 updateUI();
             }
@@ -339,6 +339,14 @@ namespace MysteryCrateEditor
                 ((Crate)CrateList.SelectedItem).Rewards.Add(reward);
                 updateUI();
             }
+        }
+
+        private void EditLore(object sender, RoutedEventArgs e)
+        {
+            SimpleTextPage page = new SimpleTextPage();
+            page.Text = (string)((Button)sender).DataContext;
+            bool? test = page.ShowDialog();
+            ((Button)sender).DataContext = page.Text;
         }
     }
 }
