@@ -149,12 +149,14 @@
                                     <TextBox Text="{Binding Name}" Width="200" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"/>
                                     <TextBlock Text="Lore" Grid.Row="3"/>
                                     <Button Content="Add Lore" Click="AddLore" Grid.Row="3" Grid.Column="1"/>
+                                    <Button Content="Remove Lore" Grid.Row="3" Grid.Column="2" Click="RemoveLore" DataContext="{Binding ElementName=LoreListBox}"
+                                            IsEnabled="{Binding ElementName=LoreListBox,Path=SelectedItem,Converter={StaticResource nullToBool}}"/>
                                     <ListBox x:Name="LoreListBox" ItemsSource="{Binding EditLore}" Background="Transparent" Grid.Row="4" Grid.ColumnSpan="4"
                                              ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBox HorizontalAlignment="Stretch" Text="{Binding Lore}"/>
+                                                    <TextBox Width="250" HorizontalAlignment="Stretch" Text="{Binding Lore}"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>

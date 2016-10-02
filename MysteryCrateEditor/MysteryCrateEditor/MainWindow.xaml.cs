@@ -348,5 +348,14 @@ namespace MysteryCrateEditor
             bool? test = page.ShowDialog();
             ((Button)sender).DataContext = page.Text;
         }
+
+        private void RemoveLore(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            ListBox box = (ListBox)button.DataContext;
+            ((ItemTag)box.DataContext).EditLore.RemoveAt(box.SelectedIndex);
+            button.Parent.GetType();
+            updateUI();
+        }
     }
 }
