@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Title="Crate Editor" Height="430.919" Width="790.181" MinWidth="700" MinHeight="275" Foreground="White" Loaded="OnLoaded" Closing="WindowClosing">
     <Window.Resources>
-        
+
         <Style TargetType="ListBox">
             <Setter Property="Foreground" Value="White"/>
         </Style>
@@ -21,7 +21,7 @@
         <converters:NullToBoolConverter x:Key="nullToBool"/>
         <converters:VisibleParamter x:Key="visibleParameter"/>
         <converters:BoolToVis x:Key="boolToVis"/>
-        
+
     </Window.Resources>
     <Grid Background="#FBFBFF">
         <Grid.RowDefinitions>
@@ -112,6 +112,7 @@
                     <Button Content="Command" Click="NewCommand"/>
                     <Button Content="Item" Click="NewItem"/>
                     <Button Content="Display" Click="Display"/>
+                    <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=RewardPanel}" Content="Remove" Click="RemoveSelected" Height="25"/>
                 </StackPanel>
                 <ListBox HorizontalAlignment="Stretch" x:Name="RewardTagsBox" ItemsSource="{Binding RewardTags}" Background="Transparent">
                     <ListBox.ItemTemplate>
@@ -186,7 +187,6 @@
         </StackPanel>
         <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=RewardPanel}" Content="Edit Macros" Click="EditMacros"/>
-            <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=RewardPanel}" Content="Remove Selected" Click="RemoveSelected"/>
         </StackPanel>
     </Grid>
 </Window>
