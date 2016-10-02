@@ -51,6 +51,41 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
 
         public override string ToString()
         {
+            if (RaritiesEnabled)
+            {
+                // Iterate through all of the items and replace our rarities with them!
+                foreach (var item in Rewards)
+                {
+                    ChanceTag chance = item.GetChance();
+                    CrateRarity RarityTag = null;
+                    // Get the best rarity match for our tag
+                    foreach (var rarity in Rarities)
+                    {
+                        if(RarityTag == null)
+                        {
+                            RarityTag = rarity;
+                        }
+                        else
+                        { 
+                            if(RarityTag.Value >= rarity.Value)
+                                RarityTag = rarity;
+                        }
+                    }
+                    foreach(var tag in item.RewardTags)
+                    {
+                        if(tag is ItemTag)
+                        {
+                            var itemTag = (ItemTag)tag;
+                            if (RarityTag != null)
+                            {
+                                itemTag.Lore.Add(RarityTag.Name);
+                            }
+                        }
+                    }
+
+                }
+            }
+
             string reward = "";
             foreach (var item in Rewards)
             {
