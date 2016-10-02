@@ -210,6 +210,11 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData
                     {
                         FishingRod = true
                     };
+                case MinecraftEnchants.Mending:
+                    return new EnchantCompatability((int)MinecraftEnchants.Mending)
+                    {
+                        Universal = true
+                    };
                 default:
                     break;
             }
@@ -273,6 +278,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData
         Flame = 50,
         Infinity = 51,
         LuckOfTheSea = 61,
-        Lure = 62
+        Lure = 62,
+        Mending = 72
     }
 }
