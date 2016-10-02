@@ -4,6 +4,7 @@ using MysteryCrateEditor.Libraries.MysteryCrates;
 using MysteryCrateEditor.Libraries.Storage;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -190,12 +191,36 @@ namespace MysteryCrateEditor
 
         private void ExportCrate(object sender, RoutedEventArgs e)
         {
-            if(CratePanel.DataContext is Crate)
+            var messageResult = MessageBox.Show("Would you like to save to file?","Save",MessageBoxButton.YesNoCancel);
+            if (messageResult == MessageBoxResult.Yes)
             {
-                Crate crate = (Crate)CratePanel.DataContext;
-                // Should probably make a new window to show this in that allows the user to copy+paste it into their config.
-                // Once more developed, I should also add a export all button.
-                MessageBox.Show(crate.ToString());
+                var dialog = new Microsoft.Win32.SaveFileDialog();
+                dialog.Filter = "YML file (*.yml)|*.yml";
+                bool? dialogResult = dialog.ShowDialog();
+                if (dialogResult == true)
+                {
+                    string filePath = dialog.FileName;
+
+                    using (FileStream stream = File.OpenWrite(filePath))
+                    {
+                        using (StreamWriter writer = new StreamWriter(stream))
+                        {
+                            Crate crate = (Crate)CratePanel.DataContext;
+                            writer.Write(crate.ToString());
+                        }
+                    }
+
+                }
+            }
+            else if(messageResult == MessageBoxResult.No)
+            {
+                if(CratePanel.DataContext is Crate)
+                {
+                    Crate crate = (Crate)CratePanel.DataContext;
+                    // Should probably make a new window to show this in that allows the user to copy+paste it into their config.
+                    // Once more developed, I should also add a export all button.
+                    MessageBox.Show(crate.ToString());
+                }
             }
         }
 
