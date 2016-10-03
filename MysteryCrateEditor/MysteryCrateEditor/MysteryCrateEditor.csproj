@@ -59,8 +59,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Libraries\MysteryCrate\Stats\Extensions.cs" />
+    <Compile Include="Libraries\MysteryCrate\Stats\Stats.cs" />
     <Compile Include="SimpleTextPage.xaml.cs">
       <DependentUpon>SimpleTextPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StatsPreview.xaml.cs">
+      <DependentUpon>StatsPreview.xaml</DependentUpon>
     </Compile>
     <Page Include="MacroEditor.xaml">
       <SubType>Designer</SubType>
@@ -111,6 +116,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="SimpleTextPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StatsPreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
