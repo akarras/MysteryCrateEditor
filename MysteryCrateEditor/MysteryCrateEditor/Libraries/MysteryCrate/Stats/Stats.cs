@@ -24,11 +24,14 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Stats
 
         public List<ChanceStat> Chances { get; set; }
 
+        public int Total { get; set; }
+
         public int getTotal()
         {
             var chanceInts = from chance in Chances
                              select chance.Chance;
-            return chanceInts.Sum();
+            Total = chanceInts.Sum();
+            return Total;
         }
     }
     public class ChanceStat

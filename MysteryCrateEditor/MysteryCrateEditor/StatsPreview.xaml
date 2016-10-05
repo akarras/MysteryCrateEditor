@@ -7,17 +7,28 @@
         mc:Ignorable="d"
         Loaded="StatsPageLoaded"
         Title="Stats Preview" Height="300" Width="300">
-    <Grid>
-        <ListBox ItemsSource="{Binding Chances}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Name}"/>
-                        <TextBlock Text="{Binding Chance}"/>
-                        <TextBlock Text="{Binding PercentChance}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </Grid>
+
+    <ScrollViewer>
+
+        <StackPanel HorizontalAlignment="Stretch">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Total Chances"/>
+                <TextBlock Text="{Binding Total}"/>
+            </StackPanel>
+            <ListBox ItemsSource="{Binding Chances}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text="{Binding Chance}"/>
+                            <Grid Width="200" Height="25">
+                                <ProgressBar HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Value="{Binding PercentChance}" LargeChange="0.1" Maximum="1"/>
+                                <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding PercentChance}"/>
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </ScrollViewer>
 </Window>
