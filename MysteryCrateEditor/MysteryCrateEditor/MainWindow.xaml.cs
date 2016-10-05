@@ -382,5 +382,13 @@ namespace MysteryCrateEditor
             button.Parent.GetType();
             updateUI();
         }
+
+        private void StatsButtonClick(object sender, RoutedEventArgs e)
+        {
+            StatsPreview statsPreview = new StatsPreview();
+            Crate crate = (Crate)CratePanel.DataContext;
+            statsPreview.Crate = crate;
+            statsPreview.Show();
+        }
     }
 }

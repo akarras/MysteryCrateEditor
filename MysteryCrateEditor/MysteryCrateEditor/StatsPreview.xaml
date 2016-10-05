@@ -8,10 +8,11 @@
         Loaded="StatsPageLoaded"
         Title="Stats Preview" Height="300" Width="300">
     <Grid>
-        <ListBox>
+        <ListBox ItemsSource="{Binding Chances}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
+                        <TextBlock Text="{Binding Name}"/>
                         <TextBlock Text="{Binding Chance}"/>
                         <TextBlock Text="{Binding PercentChance}"/>
                     </StackPanel>

@@ -28,7 +28,7 @@ namespace MysteryCrateEditor
         }
 
         private void StatsPageLoaded(object sender, RoutedEventArgs e)
-        {
+        { 
             DataContext = Crate.getStats();
         }
     }

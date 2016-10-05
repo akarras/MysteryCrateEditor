@@ -13,8 +13,13 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Stats
         public Stats(List<Reward> rewards)
         {
             var chances = from reward in rewards
-                          select new ChanceStat(reward.GetChance().Chance);
+                          select new ChanceStat(reward.Name,reward.GetChance().Chance);
             Chances = chances.ToList();
+            int total = getTotal();
+            foreach(var chance in Chances)
+            {
+                chance.PercentChance = (float)chance.Chance / (float)total;
+            }
         }
 
         public List<ChanceStat> Chances { get; set; }
@@ -28,10 +33,12 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Stats
     }
     public class ChanceStat
     {
-        public ChanceStat(int chance)
+        public ChanceStat(string name, int chance)
         {
+            Name = name;
             Chance = chance;
         }
+        public string Name { get; set; }
         public int Chance { get; set; }
         public float PercentChance { get; set; }
     }

@@ -186,6 +186,7 @@
             <Button x:Name="Button" Content="Add New Crate" Width="Auto" Click="AddCrate"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
+            <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" x:Name="button" Content="Stats" HorizontalAlignment="Left" VerticalAlignment="Top" Click="StatsButtonClick"/>
             <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Export Crate" Click="ExportCrate" />
             <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Save Crate" Click="SaveCrate" />
             <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Delete Crate" Click="DeleteCrate"/>
