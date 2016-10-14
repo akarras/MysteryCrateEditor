@@ -64,7 +64,12 @@
                         <ComboBox ItemsSource="{Binding Source={converters:Enum {x:Type crate:CrateEffect}}}" SelectedItem="{Binding Effect.dormantEffects}"/>
                     </StackPanel>
                 </StackPanel>
-
+                <StackPanel>
+                    <TextBlock Text="On Open Message:"/>
+                    <TextBox Text="{Binding Message.OnOpen}"/>
+                    <TextBlock Text="Broadcast:"/>
+                    <TextBox Text="{Binding Message.Broadcast}"/>
+                </StackPanel>
                 <CheckBox IsChecked="{Binding Preview}" Content="Is Preview Enabled?"/>
                 <Grid>
                     <CheckBox IsChecked="{Binding Shop.Enabled}" Content="Shop Enabled"/>
