@@ -6,6 +6,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YamlDotNet.RepresentationModel;
+using YamlDotNet.Serialization;
 
 namespace MysteryCrateEditor.Libraries.MysteryCrates
 {
@@ -26,9 +28,12 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             Rarities = new List<CrateRarity>();
         }
         public CrateType Type { get; set; }
+        [YamlIgnore]
         public Guid Id { get; set; }
-        [JsonProperty(ItemTypeNameHandling = TypeNameHandling.Arrays)]
+        [JsonProperty(ItemTypeNameHandling = TypeNameHandling.Arrays),YamlIgnore]
         public List<Reward> Rewards { get; set; }
+        [JsonIgnore]
+        public List<String> RewardList { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public bool Preview { get; set; }
@@ -36,6 +41,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
         public CrateMessages Message { get; set; }
         public CrateEffects Effect { get; set; }
         public bool RaritiesEnabled { get; set; }
+        [YamlIgnore]
         public List<CrateRarity> Rarities { get; set; }
         public void NotifyUpdate(string name)
         {
@@ -91,13 +97,67 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
 
                 }
             }
-
             string reward = "";
             foreach (var item in Rewards)
             {
                 reward += "            - \"" + item.GetReward() + "\"\n";
             }
             return reward;
+        }
+
+        public YamlNode serializeYaml()
+        {
+            var crateNode = new YamlMappingNode();
+            // This should be validated, as any null object will break the entire document
+            // Add the properties of the crate
+            var crateProps = new YamlMappingNode();
+            crateProps.Add("type", Type.ToString());
+            // Add the buy node
+            var buyNode = new YamlMappingNode();
+            buyNode.Add("enabled", Shop.Enabled.ToString().ToLower());
+            buyNode.Add("cost", Shop.Buy.ToString());
+            crateProps.Add("buy", buyNode);
+
+            // Add message node
+            var messageNode = new YamlMappingNode();
+            // Set our style to singlequoted for this section
+            var onOpenNode = new YamlScalarNode(Message.OnOpen);
+            onOpenNode.Style = YamlDotNet.Core.ScalarStyle.SingleQuoted;
+            var broadcastNode = new YamlScalarNode(Message.Broadcast);
+            broadcastNode.Style = YamlDotNet.Core.ScalarStyle.SingleQuoted;
+            messageNode.Add("onOpen", onOpenNode);
+            messageNode.Add("broadcast", broadcastNode);
+            crateProps.Add("message", messageNode);
+            // Oops, I don't have a preview item setup
+
+            var effect = new YamlMappingNode();
+            // This actually turns out to be a list. Really obnoxious having yaml with , , , , in it.
+            effect.Add("onOpenEffects", Effect.onOpenEffects.ToString());
+            effect.Add("dormantEffects", Effect.dormantEffects.ToString());
+            crateProps.Add("effect", effect);
+
+            // Add rewards
+            var reward = new YamlMappingNode();
+            // TODO, add min/max rewards
+            reward.Add("minimumRewards", "1");
+            reward.Add("maximumRewards", "1");
+            // Add the list of crate rewards
+            var rewards = new YamlSequenceNode();
+            foreach (var thereward in Rewards)
+            {
+                var scalar = new YamlScalarNode(thereward.GetReward());
+                scalar.Style = YamlDotNet.Core.ScalarStyle.SingleQuoted;
+                rewards.Add(scalar);
+            }
+            if (rewards.Count() > 0)
+            {
+                reward.Add("rewards", rewards);
+            }
+            crateProps.Add("reward", reward);
+            // Add the properties to the root crate node
+            crateNode.Add(Name, crateProps);
+
+            return crateNode;
         }
     }
     public enum CrateType

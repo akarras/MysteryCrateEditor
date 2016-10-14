@@ -18,6 +18,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using YamlDotNet.RepresentationModel;
+using YamlDotNet.Serialization;
 
 namespace MysteryCrateEditor
 {
@@ -389,6 +391,52 @@ namespace MysteryCrateEditor
             Crate crate = (Crate)CratePanel.DataContext;
             statsPreview.Crate = crate;
             statsPreview.Show();
+        }
+
+        private void ExportAll_Click(object sender, RoutedEventArgs e)
+        {
+            // Prep the crate for extraction
+            var yaml = new YamlStream();
+            var sequence = new YamlSequenceNode();
+            sequence.Style = YamlDotNet.Core.Events.SequenceStyle.Block;
+            foreach(var crate in crates)
+            {
+                sequence.Add(crate.serializeYaml());
+                // Adds the crate document to the file stream
+            }
+            YamlDocument document = new YamlDocument(sequence);
+            yaml.Add(document);
+            var messageResult = MessageBox.Show("Would you like to save to file?", "Save", MessageBoxButton.YesNoCancel);
+            if (messageResult == MessageBoxResult.Yes)
+            {
+                var dialog = new Microsoft.Win32.SaveFileDialog();
+                dialog.Filter = "YML file (*.yml)|*.yml";
+                bool? dialogResult = dialog.ShowDialog();
+                if (dialogResult == true)
+                {
+                    string filePath = dialog.FileName;
+                    File.Delete(filePath);
+                    using (FileStream stream = File.OpenWrite(filePath))
+                    {
+                        using(var writer = new StreamWriter(stream))
+                        {
+                            yaml.Save(writer);
+                        }
+                    }
+
+                }
+            }
+            else if (messageResult == MessageBoxResult.No)
+            {
+                if (CratePanel.DataContext is Crate)
+                {
+                    Crate crate = (Crate)CratePanel.DataContext;
+                    // Should probably make a new window to show this in that allows the user to copy+paste it into their config.
+                    // Once more developed, I should also add a export all button.
+                    MessageBox.Show(crate.ToString());
+                }
+            }
+            MessageBox.Show(yaml.ToString());
         }
     }
 }

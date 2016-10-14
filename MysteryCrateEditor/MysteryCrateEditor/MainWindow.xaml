@@ -199,6 +199,7 @@
             </StackPanel>
         </ScrollViewer>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="1">
+            <Button x:Name="ExportAll" Content="Export All" Click="ExportAll_Click"/>
             <Button Content="Save All" HorizontalAlignment="Right" Click="SaveAll_Click" />
             <Button x:Name="Button" Content="Add New Crate" Width="Auto" Click="AddCrate"/>
         </StackPanel>
