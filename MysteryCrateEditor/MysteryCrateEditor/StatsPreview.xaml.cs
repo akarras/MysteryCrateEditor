@@ -29,7 +29,9 @@ namespace MysteryCrateEditor
 
         private void StatsPageLoaded(object sender, RoutedEventArgs e)
         { 
-            DataContext = Crate.getStats();
+            var stats = Crate.getStats();
+            stats.Chances = stats.Chances.OrderBy(stat => stat.Chance).ToList();
+            DataContext = stats;
         }
     }
 }

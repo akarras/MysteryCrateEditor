@@ -61,14 +61,20 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
                     // Get the best rarity match for our tag
                     foreach (var rarity in Rarities)
                     {
-                        if(RarityTag == null)
+                        // Check if the given rarity applies to our tag
+                        if (chance.Chance >= rarity.Value)
                         {
-                            RarityTag = rarity;
-                        }
-                        else
-                        { 
-                            if(RarityTag.Value >= rarity.Value)
+                            if (RarityTag == null)
+                            {
+
                                 RarityTag = rarity;
+                            }
+                            else
+                            {
+                                // If the new rarity is better than the current rarity we should use that one instead
+                                if(RarityTag.Value < rarity.Value)
+                                    RarityTag.Value = rarity.Value;
+                            }
                         }
                     }
                     foreach(var tag in item.RewardTags)
@@ -103,6 +109,52 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
         ROULETTEKEYCRATE,
         CSGOKEYCRATE
     }
+    public enum CrateEffect
+    {
+        firework,
+        explode,
+        largeexplode,
+        hugeexplosion,
+        fireworksSpark,
+        bubble,
+        splash,
+        wake,
+        suspended,
+        depthSuspend,
+        crit,
+        magicCrit,
+        smoke,
+        largesmoke,
+        spell,
+        instantSpell,
+        mobSpell,
+        mobSpellAmbient,
+        witchMagic,
+        dripWater,
+        dripLava,
+        angryVillager,
+        happyVillager,
+        townaura,
+        note,
+        portal,
+        enchantmenttable,
+        flame,
+        lava,
+        footstep,
+        cloud,
+        reddust,
+        snowballpoof,
+        snowshovel,
+        slime,
+        heart,
+        barrier,
+        iconcrack,
+        blockcrack,
+        blockdust,
+        droplet,
+        take,
+        mobappearance
+    }
     public class CrateRarity
     {
         public int Value { get; set; }
@@ -120,6 +172,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
     }
     public class CrateEffects
     {
-
+        public CrateEffect onOpenEffects { get; set; }
+        public CrateEffect dormantEffects { get; set; }
     }
 }

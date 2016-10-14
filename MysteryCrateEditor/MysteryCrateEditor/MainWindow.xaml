@@ -7,10 +7,10 @@
         xmlns:sys="clr-namespace:System;assembly=mscorelib"
         xmlns:converters="clr-namespace:MysteryCrateEditor.Libraries.MysteryCrate.Converters"
         xmlns:itemData="clr-namespace:MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData"
+        xmlns:crate="clr-namespace:MysteryCrateEditor.Libraries.MysteryCrates"
         mc:Ignorable="d"
         Title="Crate Editor" Height="430.919" Width="790.181" MinWidth="700" MinHeight="275" Foreground="White" Loaded="OnLoaded" Closing="WindowClosing">
     <Window.Resources>
-
         <Style TargetType="ListBox">
             <Setter Property="Foreground" Value="White"/>
         </Style>
@@ -21,7 +21,6 @@
         <converters:NullToBoolConverter x:Key="nullToBool"/>
         <converters:VisibleParamter x:Key="visibleParameter"/>
         <converters:BoolToVis x:Key="boolToVis"/>
-
     </Window.Resources>
     <Grid Background="#FBFBFF">
         <Grid.RowDefinitions>
@@ -54,6 +53,18 @@
                 <TextBox Text="{Binding Name}"/>
                 <TextBlock Text="Display Name"/>
                 <TextBox Text="{Binding DisplayName}"/>
+                <TextBlock Text="Effects"/>
+                <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical" Width="100">
+                        <TextBlock Text="On Open"/>
+                        <ComboBox ItemsSource="{Binding Source={converters:Enum {x:Type crate:CrateEffect}}}" SelectedItem="{Binding Effect.onOpenEffects}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Width="100">
+                        <TextBlock Text="Dormant Effects"/>
+                        <ComboBox ItemsSource="{Binding Source={converters:Enum {x:Type crate:CrateEffect}}}" SelectedItem="{Binding Effect.dormantEffects}"/>
+                    </StackPanel>
+                </StackPanel>
+
                 <CheckBox IsChecked="{Binding Preview}" Content="Is Preview Enabled?"/>
                 <Grid>
                     <CheckBox IsChecked="{Binding Shop.Enabled}" Content="Shop Enabled"/>
@@ -88,6 +99,7 @@
                 <Grid>
                     <TextBlock Text="Rewards:"/>
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <TextBlock Text="{Binding Items.Count, ElementName=RewardsListBox}"/>
                         <Button Click="AddNewReward" Content="Add Reward" Height="20"/>
                         <Button Click="DuplicateSelectedReward" Content="Duplicate" IsEnabled="{Binding SelectedItem, Converter={StaticResource nullToBool}, ElementName=RewardsListBox}"/>
                         <Button Click="RemoveSelectedReward" Content="Remove" IsEnabled="{Binding SelectedItem, Converter={StaticResource nullToBool}, ElementName=RewardsListBox}"/>
