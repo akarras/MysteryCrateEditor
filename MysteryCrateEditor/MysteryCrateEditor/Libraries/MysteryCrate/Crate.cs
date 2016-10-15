@@ -145,6 +145,8 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             var rewards = new YamlSequenceNode();
             foreach (var thereward in Rewards)
             {
+                // Updates the plaintext Lore with rarity
+                thereward.UpdateLore(getRarity(thereward));
                 var scalar = new YamlScalarNode(thereward.GetReward());
                 scalar.Style = YamlDotNet.Core.ScalarStyle.SingleQuoted;
                 rewards.Add(scalar);
@@ -159,7 +161,39 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
 
             return crateNode;
         }
+
+        private string getRarity(Reward item)
+        {
+            ChanceTag itemChance = item.GetChance();
+            CrateRarity RarityTag = null;
+            // Get the best rarity match for our tag
+            foreach (var rarity in Rarities)
+            {
+                if (itemChance.Chance <= rarity.Value)
+                {
+                    if (RarityTag == null)
+                    {
+                        RarityTag = rarity;
+                    }
+                    else
+                    {
+                        // If the new rarity is worse than the current rarity we should use that one instead
+                        if (RarityTag.Value >= rarity.Value)
+                        {
+                            RarityTag.Value = rarity.Value;
+                        }
+                    }
+                }
+            }
+            if(RarityTag == null)
+            {
+                return "";
+            }
+            return RarityTag.Name;
+        }
     }
+
+
     public enum CrateType
     {
         SUPPLYCRATE,
@@ -169,6 +203,8 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
         ROULETTEKEYCRATE,
         CSGOKEYCRATE
     }
+
+
     public enum CrateEffect
     {
         firework,
@@ -215,21 +251,29 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
         take,
         mobappearance
     }
+
+
     public class CrateRarity
     {
         public int Value { get; set; }
         public string Name { get; set; }
     }
+
+
     public class CrateShop
     {
         public bool Enabled { get; set; }
         public int Buy { get; set; }
     }
+
+
     public class CrateMessages
     {
         public string OnOpen { get; set; }
         public string Broadcast { get; set; }
     }
+
+
     public class CrateEffects
     {
         public CrateEffect onOpenEffects { get; set; }

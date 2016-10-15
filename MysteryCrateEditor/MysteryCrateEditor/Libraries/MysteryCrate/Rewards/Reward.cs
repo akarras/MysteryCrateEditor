@@ -84,5 +84,24 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
                           select tag;
             return rewards.First() as ChanceTag;
         }
+        public static void UpdateLore(this Reward reward, string Lore)
+        {
+            foreach(var item in reward.RewardTags)
+            {
+                if(item is ItemTag)
+                {
+                    var itemTag = (ItemTag)item;
+                    itemTag.Lore = new List<string>();
+                    if (itemTag.EditLore != null)
+                    {
+                        foreach (var lore in itemTag.EditLore)
+                        {
+                            itemTag.Lore.Add(lore.Lore);
+                        }
+                    }
+                    itemTag.Lore.Add(Lore);
+                }
+            }
+        }
     }
 }
