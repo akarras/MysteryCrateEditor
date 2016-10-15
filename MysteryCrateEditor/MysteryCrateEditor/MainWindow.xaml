@@ -17,6 +17,9 @@
         <Style TargetType="CheckBox">
             <Setter Property="Foreground" Value="White"/>
         </Style>
+        <Style TargetType="Expander">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
         <converters:NullToVisibilityConverter x:Key="nullToVis"/>
         <converters:NullToBoolConverter x:Key="nullToBool"/>
         <converters:VisibleParamter x:Key="visibleParameter"/>
@@ -48,59 +51,109 @@
         <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
             <StackPanel IsEnabled="{Binding SelectedValue, Converter={StaticResource nullToBool}, ElementName=CrateList}" Background="#0B4F6C" x:Name="CratePanel" DataContext="{Binding SelectedValue, ElementName=CrateList}">
                 <TextBlock Text="Crate Type"/>
-                <ComboBox x:Name="CrateTypeComboBox" SelectedItem="{Binding Type}"/>
-                <TextBlock Text="Name"/>
-                <TextBox Text="{Binding Name}"/>
-                <TextBlock Text="Display Name"/>
-                <TextBox Text="{Binding DisplayName}"/>
-                <TextBlock Text="Effects"/>
-                <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical" Width="100">
-                        <TextBlock Text="On Open"/>
-                        <ComboBox ItemsSource="{Binding Source={converters:Enum {x:Type crate:CrateEffect}}}" SelectedItem="{Binding Effect.onOpenEffects}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical" Width="100">
-                        <TextBlock Text="Dormant Effects"/>
-                        <ComboBox ItemsSource="{Binding Source={converters:Enum {x:Type crate:CrateEffect}}}" SelectedItem="{Binding Effect.dormantEffects}"/>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock Text="On Open Message:"/>
-                    <TextBox Text="{Binding Message.OnOpen}"/>
-                    <TextBlock Text="Broadcast:"/>
-                    <TextBox Text="{Binding Message.Broadcast}"/>
-                </StackPanel>
                 <CheckBox IsChecked="{Binding Preview}" Content="Is Preview Enabled?"/>
-                <Grid>
-                    <CheckBox IsChecked="{Binding Shop.Enabled}" Content="Shop Enabled"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="Price:"/>
-                        <TextBox HorizontalAlignment="Right" Width="100" IsEnabled="{Binding Shop.Enabled}" Text="{Binding Shop.Buy}" Height="18"/>
+                <ComboBox x:Name="CrateTypeComboBox" SelectedItem="{Binding Type}"/>
+                <Expander Header="Name">
+                    <StackPanel>
+                        <TextBlock Text="Name"/>
+                        <TextBox Text="{Binding Name}"/>
+                        <TextBlock Text="Display Name"/>
+                        <TextBox Text="{Binding DisplayName}"/>
                     </StackPanel>
-                </Grid>
-                <TextBlock Text="Chance settings:"/>
-                <CheckBox Content="Add rarity tags" IsChecked="{Binding RaritiesEnabled}" x:Name="RarityTags"/>
-                <StackPanel x:Name="RaritiesStackPanel" Visibility="{Binding IsChecked, Converter={StaticResource boolToVis}, ElementName=RarityTags}">
-                    <TextBlock Text="Rarities"/>
-                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                        <Button Content="Add Rarity" Click="AddRarity"/>
-                        <Button Content="Remove" Click="RemoveRarity" IsEnabled="{Binding SelectedItem, Converter={StaticResource nullToBool}, ElementName=RaritiesListBox}"/>
+                </Expander>
+                <Expander Header="Item">
+                    <StackPanel DataContext="{Binding Key}">
+                        <TextBlock Text="Item"/>
+                        <TextBox Text="{Binding Item}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Lore:"/>
+                            <Button Content="Add" Click="AddLoreButton"/>
+                            <Button Content="Remove" Click="RemoveLoreButton" IsEnabled="{Binding ElementName=KeyLoreListBox,Path=SelectedItem,Converter={StaticResource nullToBool}}"/>
+                        </StackPanel>
+                        <ListBox x:Name="KeyLoreListBox" Height="60" ItemsSource="{Binding EditLore}" Background="Transparent">
+                            <ListBox.DataContext>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Lore}"/>
+                                </DataTemplate>
+                            </ListBox.DataContext>
+                        </ListBox>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Enchantment"/>
+                            <Button Content="Add" Click="AddKeyEnchant"/>
+                            <Button Content="Remove" Click="RemoveKeyEnchant" IsEnabled="{Binding ElementName=KeyEnchantsListBox,Path=SelectedItem,Converter={StaticResource nullToBool}}"/>
+                        </StackPanel>
+                        <ListBox x:Name="KeyEnchantsListBox" Height="60" ItemsSource="{Binding Enchants}" Background="Transparent">
+                            <ListBox.DataContext>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox Width="70" Text="{Binding Strength}"/>
+                                        <ComboBox Width="175" ItemsSource="{Binding Source={converters:Enum {x:Type itemData:MinecraftEnchants}}}" SelectedItem="{Binding Enchant}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.DataContext>
+                        </ListBox>
                     </StackPanel>
-                    <ListBox Background="Transparent" x:Name="RaritiesListBox" ItemsSource="{Binding Rarities}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="80*"/>
-                                        <ColumnDefinition Width="200*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBox Text="{Binding Value}" Width="50"/>
-                                    <TextBox Text="{Binding Name}" Grid.Column="1" Width="150"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </StackPanel>
+                </Expander>
+                <Expander Header="Effects">
+                    <StackPanel>
+                        <TextBlock Text="Effects"/>
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical" Width="100">
+                                <TextBlock Text="On Open"/>
+                                <ComboBox ItemsSource="{Binding Source={converters:Enum {x:Type crate:CrateEffect}}}" SelectedItem="{Binding Effect.onOpenEffects}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" Width="100">
+                                <TextBlock Text="Dormant Effects"/>
+                                <ComboBox ItemsSource="{Binding Source={converters:Enum {x:Type crate:CrateEffect}}}" SelectedItem="{Binding Effect.dormantEffects}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Expander>
+                <Expander Header="Messages">
+                    <StackPanel>
+                        <TextBlock Text="On Open Message:"/>
+                        <TextBox Text="{Binding Message.OnOpen}"/>
+                        <TextBlock Text="Broadcast:"/>
+                        <TextBox Text="{Binding Message.Broadcast}"/>
+                    </StackPanel>
+                </Expander>
+                <Expander Header="Shop">
+                    <Grid>
+                        <CheckBox IsChecked="{Binding Shop.Enabled}" Content="Shop Enabled"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock Text="Price:"/>
+                            <TextBox HorizontalAlignment="Right" Width="100" IsEnabled="{Binding Shop.Enabled}" Text="{Binding Shop.Buy}" Height="18"/>
+                        </StackPanel>
+                    </Grid>
+                </Expander>
+                <Expander Header="Chance">
+                    <StackPanel>
+                        <TextBlock Text="Chance settings:"/>
+                        <CheckBox Content="Add rarity tags" IsChecked="{Binding RaritiesEnabled}" x:Name="RarityTags"/>
+                        <StackPanel x:Name="RaritiesStackPanel" Visibility="{Binding IsChecked, Converter={StaticResource boolToVis}, ElementName=RarityTags}">
+                            <TextBlock Text="Rarities"/>
+                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                <Button Content="Add Rarity" Click="AddRarity"/>
+                                <Button Content="Remove" Click="RemoveRarity" IsEnabled="{Binding SelectedItem, Converter={StaticResource nullToBool}, ElementName=RaritiesListBox}"/>
+                            </StackPanel>
+                            <ListBox Background="Transparent" x:Name="RaritiesListBox" ItemsSource="{Binding Rarities}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80*"/>
+                                                <ColumnDefinition Width="200*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Text="{Binding Value}" Width="50"/>
+                                            <TextBox Text="{Binding Name}" Grid.Column="1" Width="150"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </StackPanel>
+                </Expander>
+                
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Minimum:"/>
                     <TextBox Width="25" Text="{Binding MinimumRewards}"/>

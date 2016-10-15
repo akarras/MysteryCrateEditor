@@ -26,6 +26,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             Message = new CrateMessages();
             Effect = new CrateEffects();
             Rarities = new List<CrateRarity>();
+            Key = new ItemTag();
             MinimumRewards = 1;
             MaximumRewards = 1;
         }
@@ -38,6 +39,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
         public int MaximumRewards { get; set; }
         [JsonIgnore]
         public List<String> RewardList { get; set; }
+        public ItemTag Key { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public bool Preview { get; set; }
@@ -116,11 +118,32 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             // Add the properties of the crate
             var crateProps = new YamlMappingNode();
             crateProps.Add("type", Type.ToString());
+
+            var displayName = new YamlScalarNode(DisplayName);
+            displayName.Style = YamlDotNet.Core.ScalarStyle.SingleQuoted;
+            crateProps.Add("displayName", displayName);
+
+            crateProps.Add("preview", Preview.ToString().ToLower());
+
             // Add the buy node
             var buyNode = new YamlMappingNode();
             buyNode.Add("enabled", Shop.Enabled.ToString().ToLower());
             buyNode.Add("cost", Shop.Buy.ToString());
             crateProps.Add("buy", buyNode);
+            
+            // Add the key item
+            var key = new YamlMappingNode();
+            key.Add("item", Key.Item);
+            key.Add("enchantment", string.Join(";", Key.Enchants));
+            key.Add("name", Key.Name);
+            var keyLore = new YamlSequenceNode();
+            foreach(var lore in Key.Lore)
+            {
+                keyLore.Add(lore);
+            }
+            key.Add("lore", keyLore);
+
+            crateProps.Add("key", key);
 
             // Add message node
             var messageNode = new YamlMappingNode();
@@ -141,7 +164,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
 
             // Add rewards
             var reward = new YamlMappingNode();
-            // TODO, add min/max rewards
+
             reward.Add("minimumRewards", MinimumRewards.ToString());
             reward.Add("maximumRewards", MaximumRewards.ToString());
             // Add the list of crate rewards

@@ -450,5 +450,33 @@ namespace MysteryCrateEditor
             updateUI();
 
         }
+
+        private void AddKeyEnchant(object sender, RoutedEventArgs e)
+        {
+            var crate = (Crate)CratePanel.DataContext;
+            crate.Key.Enchants.Add(new EnchantData());
+            updateUI();
+        }
+
+        private void RemoveKeyEnchant(object sender, RoutedEventArgs e)
+        {
+            var crate = (Crate)CratePanel.DataContext;
+            crate.Key.Enchants.Remove((EnchantData)KeyEnchantsListBox.SelectedItem);
+            updateUI();
+        }
+
+        private void AddLoreButton(object sender, RoutedEventArgs e)
+        {
+            var crate = (Crate)CratePanel.DataContext;
+            crate.Key.EditLore.Add(new LoreContainer() { Lore = "New Lore" });
+            updateUI();
+        }
+
+        private void RemoveLoreButton(object sender, RoutedEventArgs e)
+        {
+            var crate = (Crate)CratePanel.DataContext;
+            crate.Key.EditLore.Remove((LoreContainer)KeyLoreListBox.SelectedItem);
+            updateUI();
+        }
     }
 }

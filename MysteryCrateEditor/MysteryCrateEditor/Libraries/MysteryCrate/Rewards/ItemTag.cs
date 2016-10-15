@@ -32,6 +32,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
             Item = "New Item";
             Amount = 1;
             Lore = new List<string>();
+            EditLore = new List<LoreContainer>();
             Enchants = new List<EnchantData>();
         }
 
