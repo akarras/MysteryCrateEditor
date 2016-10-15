@@ -26,12 +26,16 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             Message = new CrateMessages();
             Effect = new CrateEffects();
             Rarities = new List<CrateRarity>();
+            MinimumRewards = 1;
+            MaximumRewards = 1;
         }
         public CrateType Type { get; set; }
         [YamlIgnore]
         public Guid Id { get; set; }
         [JsonProperty(ItemTypeNameHandling = TypeNameHandling.Arrays),YamlIgnore]
         public List<Reward> Rewards { get; set; }
+        public int MinimumRewards { get; set; }
+        public int MaximumRewards { get; set; }
         [JsonIgnore]
         public List<String> RewardList { get; set; }
         public string Name { get; set; }
@@ -128,7 +132,6 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             messageNode.Add("onOpen", onOpenNode);
             messageNode.Add("broadcast", broadcastNode);
             crateProps.Add("message", messageNode);
-            // Oops, I don't have a preview item setup
 
             var effect = new YamlMappingNode();
             // This actually turns out to be a list. Really obnoxious having yaml with , , , , in it.
@@ -139,8 +142,8 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             // Add rewards
             var reward = new YamlMappingNode();
             // TODO, add min/max rewards
-            reward.Add("minimumRewards", "1");
-            reward.Add("maximumRewards", "1");
+            reward.Add("minimumRewards", MinimumRewards.ToString());
+            reward.Add("maximumRewards", MaximumRewards.ToString());
             // Add the list of crate rewards
             var rewards = new YamlSequenceNode();
             foreach (var thereward in Rewards)

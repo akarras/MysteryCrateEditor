@@ -101,6 +101,12 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Minimum:"/>
+                    <TextBox Width="25" Text="{Binding MinimumRewards}"/>
+                    <TextBlock Text="Maximum:"/>
+                    <TextBox Width="25" Text="{Binding MaximumRewards}"/>
+                </StackPanel>
                 <Grid>
                     <TextBlock Text="Rewards:"/>
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
