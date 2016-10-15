@@ -437,5 +437,18 @@ namespace MysteryCrateEditor
                 }
             }
         }
+
+        private void SortCrate(object sender, RoutedEventArgs e)
+        {
+            Crate currentCrate = (Crate)CratePanel.DataContext;
+
+            var sortedRewards = from reward in currentCrate.Rewards
+                                orderby reward.Name
+                                orderby reward.GetChance().Chance
+                                select reward;
+            currentCrate.Rewards = sortedRewards.ToList();
+            updateUI();
+
+        }
     }
 }

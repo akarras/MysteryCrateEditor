@@ -214,6 +214,7 @@
             <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Export Crate" Click="ExportCrate" />
             <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Save Crate" Click="SaveCrate" />
             <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Delete Crate" Click="DeleteCrate"/>
+            <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Sort" Click="SortCrate"/>
         </StackPanel>
         <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=RewardPanel}" Content="Edit Macros" Click="EditMacros"/>
