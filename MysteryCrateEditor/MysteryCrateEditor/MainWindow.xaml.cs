@@ -436,7 +436,6 @@ namespace MysteryCrateEditor
                     MessageBox.Show(crate.ToString());
                 }
             }
-            MessageBox.Show(yaml.ToString());
         }
     }
 }

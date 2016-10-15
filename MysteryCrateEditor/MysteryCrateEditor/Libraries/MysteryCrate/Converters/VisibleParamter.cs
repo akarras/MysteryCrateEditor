@@ -15,6 +15,15 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Converters
         {
             if (value is string && parameter is string)
             {
+                string stringParameter = (string)parameter;
+                var parameterParts = stringParameter.Split(new char[] { '&', '|' });
+                foreach(var part in parameterParts)
+                {
+                    if(value.ToString() == part)
+                    {
+                        return Visibility.Visible;
+                    }
+                }
                 if (value.ToString() == parameter.ToString())
                 {
                     return Visibility.Visible;

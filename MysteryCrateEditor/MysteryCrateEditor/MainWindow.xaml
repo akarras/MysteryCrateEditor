@@ -142,7 +142,7 @@
                                 <Grid HorizontalAlignment="Stretch" x:Name="CmdStackPanel" Visibility="{Binding TagName, ConverterParameter=cmd, Converter={StaticResource visibleParameter}}">
                                     <TextBox HorizontalAlignment="Stretch" Text="{Binding Command}"/>
                                 </Grid>
-                                <Grid Visibility="{Binding TagName, ConverterParameter=item, Converter={StaticResource visibleParameter}}">
+                                <Grid Visibility="{Binding TagName, ConverterParameter=item|display, Converter={StaticResource visibleParameter}}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>
                                         <RowDefinition/>
