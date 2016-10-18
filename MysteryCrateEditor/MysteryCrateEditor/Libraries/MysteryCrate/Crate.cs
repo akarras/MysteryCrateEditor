@@ -160,10 +160,16 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             
             // EFFECT NODE
             var effect = new YamlMappingNode();
-            string openEffects = string.Join(", ", Effect.onOpenEffects);
-            string dormantEffects = string.Join(", ", Effect.dormantEffects);
-            effect.Add("onOpenEffects", openEffects);
-            effect.Add("dormantEffects", dormantEffects);
+            string openEffects = string.Join(", ", from openEffect in Effect.onOpenEffects
+                                                   select openEffect.Effect);
+            var openEff = new YamlScalarNode(openEffects);
+            openEff.Style = YamlDotNet.Core.ScalarStyle.SingleQuoted;
+            string dormantEffects = string.Join(", ", from dormantEffect in Effect.dormantEffects
+                                                      select dormantEffect.Effect);
+            var dormantEff = new YamlScalarNode(dormantEffects);
+            dormantEff.Style = YamlDotNet.Core.ScalarStyle.SingleQuoted;
+            effect.Add("onOpenEffects", openEff);
+            effect.Add("dormantEffects", dormantEff);
             crateProps.Add("effect", effect);
 
             // REWARDS NODE
@@ -308,9 +314,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
         public CrateEffects()
         {
             onOpenEffects = new List<CrateEffectWrapper>();
-            onOpenEffects.Add(new CrateEffectWrapper(CrateEffect.angryVillager));
             dormantEffects = new List<CrateEffectWrapper>();
-            dormantEffects.Add(new CrateEffectWrapper(CrateEffect.angryVillager));
         }
         public List<CrateEffectWrapper> onOpenEffects { get; set; }
         public List<CrateEffectWrapper> dormantEffects { get; set; }
