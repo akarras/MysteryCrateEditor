@@ -62,35 +62,37 @@
                     </StackPanel>
                 </Expander>
                 <Expander Header="Item">
-                    <StackPanel DataContext="{Binding Key}">
+                    <StackPanel>
                         <TextBlock Text="Item"/>
-                        <TextBox Text="{Binding Item}"/>
+                        <TextBox Text="{Binding Key.Item}"/>
+                        <TextBlock Text="Name"/>
+                        <TextBox Text="{Binding Key.Name}"/>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Lore:"/>
                             <Button Content="Add" Click="AddLoreButton"/>
                             <Button Content="Remove" Click="RemoveLoreButton" IsEnabled="{Binding ElementName=KeyLoreListBox,Path=SelectedItem,Converter={StaticResource nullToBool}}"/>
                         </StackPanel>
-                        <ListBox x:Name="KeyLoreListBox" Height="60" ItemsSource="{Binding EditLore}" Background="Transparent">
-                            <ListBox.DataContext>
+                        <ListBox x:Name="KeyLoreListBox" Height="60" ItemsSource="{Binding Key.EditLore}" Background="Transparent">
+                            <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBox Text="{Binding Lore}"/>
                                 </DataTemplate>
-                            </ListBox.DataContext>
+                            </ListBox.ItemTemplate>
                         </ListBox>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Enchantment"/>
                             <Button Content="Add" Click="AddKeyEnchant"/>
                             <Button Content="Remove" Click="RemoveKeyEnchant" IsEnabled="{Binding ElementName=KeyEnchantsListBox,Path=SelectedItem,Converter={StaticResource nullToBool}}"/>
                         </StackPanel>
-                        <ListBox x:Name="KeyEnchantsListBox" Height="60" ItemsSource="{Binding Enchants}" Background="Transparent">
-                            <ListBox.DataContext>
+                        <ListBox x:Name="KeyEnchantsListBox" Height="60" ItemsSource="{Binding Key.Enchants}" Background="Transparent">
+                            <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBox Width="70" Text="{Binding Strength}"/>
                                         <ComboBox Width="175" ItemsSource="{Binding Source={converters:Enum {x:Type itemData:MinecraftEnchants}}}" SelectedItem="{Binding Enchant}"/>
                                     </StackPanel>
                                 </DataTemplate>
-                            </ListBox.DataContext>
+                            </ListBox.ItemTemplate>
                         </ListBox>
                     </StackPanel>
                 </Expander>
