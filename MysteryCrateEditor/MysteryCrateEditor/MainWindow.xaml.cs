@@ -478,5 +478,33 @@ namespace MysteryCrateEditor
             crate.Key.EditLore.Remove((LoreContainer)KeyLoreListBox.SelectedItem);
             updateUI();
         }
+
+        private void AddOpenEffect_Click(object sender, RoutedEventArgs e)
+        {
+            var crate = (Crate)CratePanel.DataContext;
+            crate.Effect.onOpenEffects.Add(new CrateEffectWrapper(CrateEffect.angryVillager));
+            updateUI();
+        }
+
+        private void AddDormantEffect_Click(object sender, RoutedEventArgs e)
+        {
+            var crate = (Crate)CratePanel.DataContext;
+            crate.Effect.dormantEffects.Add(new CrateEffectWrapper(CrateEffect.angryVillager));
+            updateUI();
+        }
+
+        private void RemoveDormantEffect(object sender, RoutedEventArgs e)
+        {
+            var crate = (Crate)CratePanel.DataContext;
+            crate.Effect.dormantEffects.RemoveAt(DormantEffectsList.SelectedIndex);
+            updateUI();
+        }
+
+        private void RemoveOpenEffect(object sender, RoutedEventArgs e)
+        {
+            var crate = (Crate)CratePanel.DataContext;
+            crate.Effect.onOpenEffects.RemoveAt(OpenEffectsList.SelectedIndex);
+            updateUI();
+        }
     }
 }

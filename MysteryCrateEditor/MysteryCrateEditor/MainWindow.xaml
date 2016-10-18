@@ -100,13 +100,33 @@
                     <StackPanel>
                         <TextBlock Text="Effects"/>
                         <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
-                            <StackPanel Orientation="Vertical" Width="100">
-                                <TextBlock Text="On Open"/>
-                                <ComboBox ItemsSource="{Binding Source={converters:Enum {x:Type crate:CrateEffect}}}" SelectedItem="{Binding Effect.onOpenEffects}"/>
+                            <StackPanel Orientation="Vertical" Width="125">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="On Open"/>
+                                    <Button Content="Add" Click="AddOpenEffect_Click"/>
+                                    <Button Content="Remove" Click="RemoveOpenEffect" IsEnabled="{Binding ElementName=OpenEffectsList,Path=SelectedItem,Converter={StaticResource nullToVis}}"/>
+                                </StackPanel>
+                                <ListBox x:Name="OpenEffectsList" Background="Transparent" ItemsSource="{Binding Effect.onOpenEffects}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding Source={converters:Enum {x:Type crate:CrateEffect}}}" SelectedItem="{Binding Effect}"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
                             </StackPanel>
-                            <StackPanel Orientation="Vertical" Width="100">
-                                <TextBlock Text="Dormant Effects"/>
-                                <ComboBox ItemsSource="{Binding Source={converters:Enum {x:Type crate:CrateEffect}}}" SelectedItem="{Binding Effect.dormantEffects}"/>
+                            <StackPanel Orientation="Vertical" Width="125">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Dormant"/>
+                                    <Button Content="Add" Click="AddDormantEffect_Click"/>
+                                    <Button Content="Remove" Click="RemoveDormantEffect" IsEnabled="{Binding ElementName=DormantEffectsList,Path=ItemsSource,Converter={StaticResource nullToVis}}"/>
+                                </StackPanel>
+                                <ListBox x:Name="DormantEffectsList" ItemsSource="{Binding Effect.dormantEffects}" Background="Transparent">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding Source={converters:Enum {x:Type crate:CrateEffect}}}" SelectedItem="{Binding Effect}"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

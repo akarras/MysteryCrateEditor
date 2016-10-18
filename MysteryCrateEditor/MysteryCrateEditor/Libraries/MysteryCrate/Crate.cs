@@ -125,13 +125,13 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
 
             crateProps.Add("preview", Preview.ToString().ToLower());
 
-            // Add the buy node
+            // BUY NODE
             var buyNode = new YamlMappingNode();
             buyNode.Add("enabled", Shop.Enabled.ToString().ToLower());
             buyNode.Add("cost", Shop.Buy.ToString());
             crateProps.Add("buy", buyNode);
             
-            // Add the key item
+            // KEY NODE
             var key = new YamlMappingNode();
             key.Add("item", Key.Item);
             key.Add("enchantment", string.Join(";", Key.Enchants));
@@ -146,7 +146,8 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             {
                 crateProps.Add("key", key);
             }
-            // Add message node
+
+            // MESSAGE NODE
             var messageNode = new YamlMappingNode();
             // Set our style to singlequoted for this section
             var onOpenNode = new YamlScalarNode(Message.OnOpen);
@@ -156,16 +157,17 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             messageNode.Add("onOpen", onOpenNode);
             messageNode.Add("broadcast", broadcastNode);
             crateProps.Add("message", messageNode);
-
+            
+            // EFFECT NODE
             var effect = new YamlMappingNode();
-            // This actually turns out to be a list. Really obnoxious having yaml with , , , , in it.
-            effect.Add("onOpenEffects", Effect.onOpenEffects.ToString());
-            effect.Add("dormantEffects", Effect.dormantEffects.ToString());
+            string openEffects = string.Join(", ", Effect.onOpenEffects);
+            string dormantEffects = string.Join(", ", Effect.dormantEffects);
+            effect.Add("onOpenEffects", openEffects);
+            effect.Add("dormantEffects", dormantEffects);
             crateProps.Add("effect", effect);
 
-            // Add rewards
+            // REWARDS NODE
             var reward = new YamlMappingNode();
-
             reward.Add("minimumRewards", MinimumRewards.ToString());
             reward.Add("maximumRewards", MaximumRewards.ToString());
             // Add the list of crate rewards
@@ -303,7 +305,27 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
 
     public class CrateEffects
     {
-        public CrateEffect onOpenEffects { get; set; }
-        public CrateEffect dormantEffects { get; set; }
+        public CrateEffects()
+        {
+            onOpenEffects = new List<CrateEffectWrapper>();
+            onOpenEffects.Add(new CrateEffectWrapper(CrateEffect.angryVillager));
+            dormantEffects = new List<CrateEffectWrapper>();
+            dormantEffects.Add(new CrateEffectWrapper(CrateEffect.angryVillager));
+        }
+        public List<CrateEffectWrapper> onOpenEffects { get; set; }
+        public List<CrateEffectWrapper> dormantEffects { get; set; }
+    }
+
+    public class CrateEffectWrapper
+    {
+        public CrateEffectWrapper()
+        {
+
+        }
+        public CrateEffectWrapper(CrateEffect effect)
+        {
+            Effect = effect;
+        }
+        public CrateEffect Effect { get; set; }
     }
 }
