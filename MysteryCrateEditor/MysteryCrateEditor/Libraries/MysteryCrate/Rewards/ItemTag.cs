@@ -90,14 +90,6 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
         public override string GetTagContents()
         {
             // Copy the edit lore to the string array container
-            if (EditLore != null)
-            {
-                var selection = from lore in EditLore
-                                select lore.Lore;
-                Lore.InsertRange(0, selection);
-            }
-
-
             List<string> parts = new List<string>();
             parts.Add(Item);
             parts.Add(Amount.ToString());

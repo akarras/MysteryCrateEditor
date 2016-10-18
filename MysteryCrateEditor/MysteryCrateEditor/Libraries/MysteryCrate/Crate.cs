@@ -137,14 +137,15 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             key.Add("enchantment", string.Join(";", Key.Enchants));
             key.Add("name", Key.Name);
             var keyLore = new YamlSequenceNode();
-            foreach(var lore in Key.Lore)
+            foreach(var lore in Key.EditLore)
             {
-                keyLore.Add(lore);
+                keyLore.Add(lore.Lore);
             }
             key.Add("lore", keyLore);
-
-            crateProps.Add("key", key);
-
+            if (key != null)
+            {
+                crateProps.Add("key", key);
+            }
             // Add message node
             var messageNode = new YamlMappingNode();
             // Set our style to singlequoted for this section
@@ -213,7 +214,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             }
             if(RarityTag == null)
             {
-                return "";
+                return "DunBad";
             }
             return RarityTag.Name;
         }
