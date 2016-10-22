@@ -9,6 +9,7 @@
         xmlns:itemData="clr-namespace:MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData"
         xmlns:crate="clr-namespace:MysteryCrateEditor.Libraries.MysteryCrates"
         mc:Ignorable="d"
+        xmlns:toolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         Title="Crate Editor" Height="430.919" Width="790.181" MinWidth="700" MinHeight="275" Foreground="White" Loaded="OnLoaded" Closing="WindowClosing">
     <Window.Resources>
         <Style TargetType="ListBox">
@@ -225,6 +226,9 @@
                                 </Grid>
                                 <Grid Visibility="{Binding TagName, ConverterParameter=item|display, Converter={StaticResource visibleParameter}}">
                                     <Grid.RowDefinitions>
+                                        <!--Row definitions for dayzzz-->
+                                        <RowDefinition/>
+                                        <RowDefinition/>
                                         <RowDefinition/>
                                         <RowDefinition/>
                                         <RowDefinition/>
@@ -272,6 +276,8 @@
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
+                                    <Button Grid.Row="7" Content="Add Color" Click="AddOrRemoveColorData"/>
+                                    <toolkit:ColorPicker Visibility="{Binding ElementName=ColorPicker, Converter={StaticResource nullToVis}, Path=DataContext}" x:Name="ColorPicker" DataContext="{Binding Colors}" SelectedColor="{Binding Color}" Grid.Row="8" Grid.ColumnSpan="3"/>
                                 </Grid>
                             </StackPanel>
                         </DataTemplate>

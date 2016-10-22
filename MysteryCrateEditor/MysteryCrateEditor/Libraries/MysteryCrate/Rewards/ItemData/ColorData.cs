@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,18 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData
         public ColorData()
         {
 
+        }
+        [JsonIgnore()]
+        public Color Color { get
+            {
+                return GetColor();
+            }
+                set
+            {
+                R = value.R;
+                G = value.G;
+                B = value.B;
+            }
         }
 
         public ColorData(int r, int g, int b)

@@ -506,5 +506,23 @@ namespace MysteryCrateEditor
             crate.Effect.onOpenEffects.RemoveAt(OpenEffectsList.SelectedIndex);
             updateUI();
         }
+
+        private void ChangedColor(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            var source = (Xceed.Wpf.Toolkit.ColorPicker)e.Source;
+            var color = (ColorData)source.DataContext;
+            color.Color = e.NewValue.Value;
+        }
+
+        private void AddOrRemoveColorData(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var item = (ItemTag)button.DataContext;
+            if (item.Colors == null)
+                item.Colors = new ColorData();
+            else
+                item.Colors = null;
+            updateUI();
+        }
     }
 }
