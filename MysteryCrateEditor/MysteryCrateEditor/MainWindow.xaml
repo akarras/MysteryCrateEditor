@@ -193,6 +193,13 @@
                     </StackPanel>
                 </Grid>
                 <ListBox Background="Transparent" ItemsSource="{Binding Rewards}" x:Name="RewardsListBox">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Command="Copy"/>
+                            <MenuItem Command="Paste"/>
+                            <MenuItem Command="Cut"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}"/>
@@ -217,6 +224,13 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel HorizontalAlignment="Stretch">
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Command="Copy"/>
+                                        <MenuItem Command="Paste"/>
+                                        <MenuItem Command="Cut"/>
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding TagName}"/>
                                 <StackPanel x:Name="ChanceStackPanel" Visibility="{Binding TagName, ConverterParameter=chance, Converter={StaticResource visibleParameter}}">
                                     <TextBox Text="{Binding Chance}" Width="50"/>

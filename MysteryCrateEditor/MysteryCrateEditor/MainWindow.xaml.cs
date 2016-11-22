@@ -2,24 +2,17 @@
 using MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData;
 using MysteryCrateEditor.Libraries.MysteryCrates;
 using MysteryCrateEditor.Libraries.Storage;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using YamlDotNet.RepresentationModel;
-using YamlDotNet.Serialization;
+using System.Collections;
 
 namespace MysteryCrateEditor
 {
@@ -37,8 +30,122 @@ namespace MysteryCrateEditor
             storage = new JSONStorage();
             loadData();
             updateUI();
+            CommandBindings.Add(new CommandBinding(ApplicationCommands.Copy, CopyExecuted, CanCopy));
+            CommandBindings.Add(new CommandBinding(ApplicationCommands.Paste, PasteExecuted, CanPaste));
+            CommandBindings.Add(new CommandBinding(ApplicationCommands.Cut, CutExecuted, CanCut));
+        }
+        #region Copy Pasta
+        private void CutExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Source is ListBox)
+            {
+                var sourceList = (ListBox)e.Source;
+                if (sourceList.SelectedItem != null)
+                {
+                    var selectedTag = sourceList.SelectedItem;
+                    Clipboard.SetText(JsonConvert.SerializeObject(selectedTag, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All }));
+                    var dataObject = Clipboard.GetText();
+                    IList list = (IList)sourceList.ItemsSource;
+                    list.RemoveAt(sourceList.SelectedIndex);
+                    updateUI();
+                    e.Handled = true;
+                }
+            }
         }
 
+        private void CanCut(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Source is ListBox)
+            {
+                ListBox senderBox = (ListBox)e.Source;
+                if (senderBox.SelectedIndex != -1)
+                {
+                    e.CanExecute = true;
+                }
+                else
+                {
+                    e.CanExecute = false;
+                }
+            }
+        }
+
+        private void PasteExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            var currentObject = Clipboard.GetText();
+            if (currentObject != null)
+            {
+                var sourceList = (ListBox)e.Source;
+                // Get the inner type of the listbox items source
+                Type listType = sourceList.ItemsSource.GetType().GetGenericArguments().Single();
+                var deserialized = JsonConvert.DeserializeObject(currentObject, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+                if (deserialized.GetType().IsSubclassOf(listType)||deserialized.GetType() == listType)
+                {
+                    ((IList)sourceList.ItemsSource).Add(deserialized);
+                }
+            }
+            updateUI();
+        }
+
+        private void CanPaste(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Source is ListBox)
+            {
+                var sourceList = (ListBox)e.Source;
+                // Get the inner type of the listbox items source
+                Type listType = sourceList.ItemsSource.GetType().GetGenericArguments().Single();
+                // Get the current object text from the user's clipboard
+                var currentObject = Clipboard.GetText();
+                if (currentObject != null)
+                {
+                    try
+                    {
+                        // Try to deserialize the object
+                        var deserialized = JsonConvert.DeserializeObject(currentObject, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+                        // If the deserialized object matches the type of the current list we can execute!
+                        if (deserialized.GetType().IsSubclassOf(listType)||deserialized.GetType() == listType)
+                        {
+                            e.CanExecute = true;
+                        }
+                    }
+                    catch
+                    {
+                        // This will fail anytime the user has anything else on their clipboard... Best to pretend nothing ever happened.
+                    }
+                }
+            }
+        }
+
+        private void CopyExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Source is ListBox)
+            {
+                var sourceList = (ListBox)e.Source;
+                if (sourceList.SelectedItem != null)
+                {
+                    var selectedTag = sourceList.SelectedItem;
+                    Clipboard.SetText(JsonConvert.SerializeObject(selectedTag, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All }));
+                    var dataObject = Clipboard.GetText();
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void CanCopy(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if(e.Source is ListBox)
+            {
+                ListBox senderBox = (ListBox)e.Source;
+                if(senderBox.SelectedIndex != -1)
+                {
+                    e.CanExecute = true;
+                }
+                else
+                {
+                    e.CanExecute = false;
+                }
+            }
+        }
+        #endregion
         private void loadData()
         {
             if (crates != null)
@@ -523,6 +630,13 @@ namespace MysteryCrateEditor
             else
                 item.Colors = null;
             updateUI();
+        }
+
+        private void RightUpRewardsTagBox(object sender, MouseButtonEventArgs e)
+        {
+            var panel = (StackPanel)sender;
+            var tag = (IRewardTag)panel.DataContext;
+            Clipboard.SetDataObject(tag, true);
         }
     }
 }
