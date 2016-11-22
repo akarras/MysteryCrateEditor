@@ -82,6 +82,11 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards
             var rewards = from tag in reward.RewardTags
                           where tag is ChanceTag
                           select tag;
+            // If the chance tag is empty, return a chance tag of 1
+            if(rewards.Count() == 0)
+            {
+                return new ChanceTag(1);
+            }
             return rewards.First() as ChanceTag;
         }
         public static void UpdateLore(this Reward reward, string Lore)
