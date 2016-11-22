@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         xmlns:toolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:fa="clr-namespace:FontAwesome.WPF;assembly=FontAwesome.WPF"
-        Title="Crate Editor" Height="430.919" Width="790.181" MinWidth="700" MinHeight="275" Foreground="White" Loaded="OnLoaded" Closing="WindowClosing">
+        Title="Crate Editor" Height="800" Width="790.181" MinWidth="700" MinHeight="275" Foreground="White" Loaded="OnLoaded" Closing="WindowClosing">
     <Window.Resources>
         <Style TargetType="ListBox">
             <Setter Property="Foreground" Value="White"/>
