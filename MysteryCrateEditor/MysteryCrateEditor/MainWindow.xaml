@@ -10,6 +10,7 @@
         xmlns:crate="clr-namespace:MysteryCrateEditor.Libraries.MysteryCrates"
         mc:Ignorable="d"
         xmlns:toolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+        xmlns:fa="clr-namespace:FontAwesome.WPF;assembly=FontAwesome.WPF"
         Title="Crate Editor" Height="430.919" Width="790.181" MinWidth="700" MinHeight="275" Foreground="White" Loaded="OnLoaded" Closing="WindowClosing">
     <Window.Resources>
         <Style TargetType="ListBox">
@@ -39,6 +40,11 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" Background="#040F16">
                 <ListBox x:Name="CrateList" Background="Transparent" VerticalAlignment="Stretch">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Command="Copy"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel DataContext="{Binding}" Orientation="Horizontal">
@@ -187,9 +193,15 @@
                     <TextBlock Text="Rewards:"/>
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                         <TextBlock Text="{Binding Items.Count, ElementName=RewardsListBox}"/>
-                        <Button Click="AddNewReward" Content="Add Reward" Height="20"/>
-                        <Button Click="DuplicateSelectedReward" Content="Duplicate" IsEnabled="{Binding SelectedItem, Converter={StaticResource nullToBool}, ElementName=RewardsListBox}"/>
-                        <Button Click="RemoveSelectedReward" Content="Remove" IsEnabled="{Binding SelectedItem, Converter={StaticResource nullToBool}, ElementName=RewardsListBox}"/>
+                        <Button Width="40" Click="AddNewReward" Height="20">
+                            <fa:FontAwesome Icon="Plus"/>
+                        </Button>
+                        <Button Width="40" Click="DuplicateSelectedReward" IsEnabled="{Binding SelectedItem, Converter={StaticResource nullToBool}, ElementName=RewardsListBox}">
+                            <fa:FontAwesome Icon="Clone"/>
+                        </Button>
+                        <Button Width="40" Click="RemoveSelectedReward" IsEnabled="{Binding SelectedItem, Converter={StaticResource nullToBool}, ElementName=RewardsListBox}">
+                            <fa:FontAwesome Icon="Remove"/>
+                        </Button>
                     </StackPanel>
                 </Grid>
                 <ListBox Background="Transparent" ItemsSource="{Binding Rewards}" x:Name="RewardsListBox">
@@ -300,16 +312,32 @@
             </StackPanel>
         </ScrollViewer>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="1">
-            <Button x:Name="ExportAll" Content="Export All" Click="ExportAll_Click"/>
-            <Button Content="Save All" HorizontalAlignment="Right" Click="SaveAll_Click" />
-            <Button x:Name="Button" Content="Add New Crate" Width="Auto" Click="AddCrate"/>
+            <Button Width="40" Click="ExportAll_Click" ToolTip="Export all crates to a file">
+                <fa:FontAwesome Icon="ArrowDown"/>
+            </Button>
+            <Button Width="40" HorizontalAlignment="Right" Click="SaveAll_Click" ToolTip="Saves all crates">
+                <fa:FontAwesome Icon="FloppyOutline"/>
+            </Button>
+            <Button x:Name="Button" Width="40" Click="AddCrate" ToolTip="Adds a new crate">
+                <fa:FontAwesome Icon="Plus"/>
+            </Button>
         </StackPanel>
         <StackPanel Grid.Column="1" Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
-            <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" x:Name="button" Content="Stats" Click="StatsButtonClick"/>
-            <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Export Crate" Click="ExportCrate" />
-            <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Save Crate" Click="SaveCrate" />
-            <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Delete Crate" Click="DeleteCrate"/>
-            <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Content="Sort" Click="SortCrate"/>
+            <Button Width="40" IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" x:Name="button" Click="StatsButtonClick" ToolTip="Displays stats on the current crate">
+                <fa:FontAwesome Icon="Info"/>
+            </Button>
+            <Button Width="40" IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Click="ExportCrate" ToolTip="Exports just this crate">
+                <fa:FontAwesome Icon="ArrowDown"/>
+            </Button>
+            <Button Width="40" IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Click="SaveCrate" ToolTip="Saves just this crate">
+                <fa:FontAwesome Icon="Save"/>
+            </Button>
+            <Button Width="40" IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Click="DeleteCrate" ToolTip="Deletes the current crate">
+                <fa:FontAwesome Icon="Trash"/>
+            </Button>
+            <Button Width="40" IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=CratePanel}" Click="SortCrate" ToolTip="Sorts the crate by rarity">
+                <fa:FontAwesome Icon="Sort"/>
+            </Button>
         </StackPanel>
         <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=RewardPanel}" Content="Edit Macros" Click="EditMacros"/>
