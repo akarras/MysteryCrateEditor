@@ -41,7 +41,22 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
         public List<String> RewardList { get; set; }
         public ItemTag Key { get; set; }
         public string Name { get; set; }
-        public string DisplayName { get; set; }
+        private string _displayName;
+        public string DisplayName
+        {
+            get
+            {
+                if (_displayName != null)
+                {
+                    return _displayName;
+                }
+                return "";
+            }
+            set
+            {
+                _displayName = value;
+            }
+        }
         public bool Preview { get; set; }
         public CrateShop Shop { get; set; }
         public CrateMessages Message { get; set; }
@@ -135,7 +150,15 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
             var key = new YamlMappingNode();
             key.Add("item", Key.Item);
             key.Add("enchantment", string.Join(";", Key.Enchants));
-            key.Add("name", Key.Name);
+            // The item uses null to keep the empty one
+            if (Key.Name != null)
+            {
+                key.Add("name", Key.Name);
+            }
+            else
+            {
+                key.Add("name", "");
+            }
             var keyLore = new YamlSequenceNode();
             foreach(var lore in Key.EditLore)
             {
@@ -304,8 +327,38 @@ namespace MysteryCrateEditor.Libraries.MysteryCrates
 
     public class CrateMessages
     {
-        public string OnOpen { get; set; }
-        public string Broadcast { get; set; }
+        private string _onOpen;
+        private string _broadcast;
+        public string OnOpen
+        {
+            get
+            {
+                if(_onOpen != null)
+                {
+                    return _onOpen;
+                }
+                return "";
+            }
+            set
+            {
+                _onOpen = value;
+            }
+        }
+        public string Broadcast
+        {
+            get
+            {
+                if(_broadcast != null)
+                {
+                    return _broadcast;
+                }
+                return "";
+            }
+            set
+            {
+                _broadcast = value;
+            }
+        }
     }
 
 
