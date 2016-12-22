@@ -90,27 +90,31 @@ namespace MysteryCrateEditor
         {
             if (e.Source is ListBox)
             {
-                var sourceList = (ListBox)e.Source;
-                // Get the inner type of the listbox items source
-                Type listType = sourceList.ItemsSource.GetType().GetGenericArguments().Single();
-                // Get the current object text from the user's clipboard
-                var currentObject = Clipboard.GetText();
-                if (currentObject != null)
-                {
-                    try
+                try
+                { 
+                    var sourceList = (ListBox)e.Source;
+                    // Get the inner type of the listbox items source
+                    Type listType = sourceList.ItemsSource.GetType().GetGenericArguments().Single();
+                    // Get the current object text from the user's clipboard
+                    if (Clipboard.ContainsText())
                     {
-                        // Try to deserialize the object
-                        var deserialized = JsonConvert.DeserializeObject(currentObject, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
-                        // If the deserialized object matches the type of the current list we can execute!
-                        if (deserialized.GetType().IsSubclassOf(listType)||deserialized.GetType() == listType)
+                        var currentObject = Clipboard.GetText();
+                        if (currentObject != null)
                         {
-                            e.CanExecute = true;
+
+                            // Try to deserialize the object
+                            var deserialized = JsonConvert.DeserializeObject(currentObject, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+                            // If the deserialized object matches the type of the current list we can execute!
+                            if (deserialized.GetType().IsSubclassOf(listType) || deserialized.GetType() == listType)
+                            {
+                                e.CanExecute = true;
+                            }
                         }
                     }
-                    catch
-                    {
-                        // This will fail anytime the user has anything else on their clipboard... Best to pretend nothing ever happened.
-                    }
+                }
+                catch
+                {
+                    // This will fail anytime the user has anything else on their clipboard... Best to pretend nothing ever happened.
                 }
             }
         }
