@@ -125,6 +125,11 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData
                     {
                         Boots = true
                     };
+                case MinecraftEnchants.FrostWalker:
+                    return new EnchantCompatability((int)MinecraftEnchants.FrostWalker)
+                    {
+                        Boots = true
+                    };
                 case MinecraftEnchants.Sharpness:
                     return new EnchantCompatability((int)MinecraftEnchants.Sharpness)
                     {
@@ -263,6 +268,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData
         AquaAffinity = 6,
         Thorns = 7,
         DepthStrider = 8,
+        FrostWalker = 9,
         Sharpness = 16,
         Smite = 17,
         BaneofArthropods = 18,
