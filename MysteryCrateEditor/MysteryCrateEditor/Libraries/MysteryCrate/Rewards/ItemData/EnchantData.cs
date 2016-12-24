@@ -285,6 +285,6 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData
         Infinity = 51,
         LuckOfTheSea = 61,
         Lure = 62,
-        Mending = 72
+        Mending = 70
     }
 }
