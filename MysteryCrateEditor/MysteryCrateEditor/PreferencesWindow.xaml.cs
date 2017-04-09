@@ -41,11 +41,22 @@ namespace MysteryCrateEditor
                 {
                     // Load the preferences file
                     // Set the default location to the users selected path
-                    prefs.defaultLocation = folder.SelectedPath;
+                    prefs.DefaultLocation = folder.SelectedPath;
                     // Save the preferences
                     prefs.savePreferences();
                     DataContext = prefs;
                 }
+            }
+        }
+
+        private void BackupsChanged(object sender, TextChangedEventArgs e)
+        {
+            // Check that the textbox doesn't have a non number value
+            int outNumber;
+            if(int.TryParse(NumberOfBackupsTextBox.Text, out outNumber))
+            {
+                prefs.NumberOfBackups = outNumber;
+                prefs.savePreferences(); 
             }
         }
     }

@@ -77,7 +77,11 @@ namespace MysteryCrateEditor.Libraries.Storage
             return preferences;
         }
         [JsonProperty]
-        public string defaultLocation { get; set; }
+        public string DefaultLocation { get; set; }
+
+        [JsonProperty]
+        public int NumberOfBackups { get; set; }
+
         [JsonProperty]
         public List<string> crateDirectoryLocations;
     }

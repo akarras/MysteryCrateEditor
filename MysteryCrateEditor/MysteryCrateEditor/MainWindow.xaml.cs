@@ -27,14 +27,14 @@ namespace MysteryCrateEditor
         {
             InitializeComponent();
             var preferences = Preferences.loadPreferences();
-            if (string.IsNullOrEmpty(preferences.defaultLocation))
+            if (string.IsNullOrEmpty(preferences.DefaultLocation))
             {
                 // Initialize our storage and load our crates from memory
                 storage = new JSONStorage();
             }
             else
             {
-                storage = new JSONStorage(preferences.defaultLocation);
+                storage = new JSONStorage(preferences.DefaultLocation);
             }
             loadData();
             updateUI();

@@ -97,6 +97,28 @@ namespace MysteryCrateEditor.Libraries.Storage
             {
                 throw new DirectoryNotFoundException();
             }
+
+            var numberOfBackups = Preferences.loadPreferences().NumberOfBackups;
+            // Remove the topmost backup
+            if(File.Exists($"{storageLocation}/{crate.Id}.json{numberOfBackups}"))
+            {
+                File.Delete($"{storageLocation}/{crate.Id}.json{numberOfBackups}");
+            }
+
+            // Iterate backwards through the list of backups
+            for(int backup = numberOfBackups; backup > 0; backup--)
+            {
+                if(File.Exists($"{storageLocation}/{crate.Id}.json{backup}"))
+                {
+                    // Move the file one up.
+                    File.Move($"{storageLocation}/{crate.Id}.json{backup}", $"{storageLocation}/{crate.Id}.json{backup + 1}");
+                }
+            }
+            if(numberOfBackups > 0)
+            {
+                File.Move($"{storageLocation}/{crate.Id}.json", $"{storageLocation}/{crate.Id}.json1");
+            }
+
             // Creates or overwrites our crate file
             using (FileStream crateFile = File.Create($"{storageLocation}/{crate.Id}.json"))
             {

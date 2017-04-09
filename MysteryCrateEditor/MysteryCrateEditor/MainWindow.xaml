@@ -313,9 +313,6 @@
             </StackPanel>
         </ScrollViewer>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="1">
-            <Button Width="40" Click="PreferencesButton_Click" ToolTip="Changes Preferences">
-                <fa:FontAwesome Icon="Cog"/>
-            </Button>
             <Button Width="40" Click="ExportAll_Click" ToolTip="Export all crates to a file">
                 <fa:FontAwesome Icon="ArrowDown"/>
             </Button>
@@ -344,6 +341,9 @@
             </Button>
         </StackPanel>
         <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Width="40" Click="PreferencesButton_Click" ToolTip="Changes Preferences">
+                <fa:FontAwesome Icon="Cog"/>
+            </Button>
             <Button IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=RewardPanel}" Content="Edit Macros" Click="EditMacros"/>
         </StackPanel>
     </Grid>
