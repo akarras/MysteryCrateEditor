@@ -1,0 +1,30 @@
+﻿<Window x:Class="MysteryCrateEditor.PreferencesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MysteryCrateEditor"
+        mc:Ignorable="d"
+        Title="PreferencesWindow" Height="300" Width="300">
+    <Grid>
+        <StackPanel Margin="10">
+            <GroupBox>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.ColumnSpan="2">Crate Save Location</Label>
+                    <TextBox Text="{Binding defaultLocation}" Grid.Row="1" x:Name="SaveLocationTextBox"/>
+                    <Button Width="50" Grid.Row="1"  Grid.Column="1" Click="ButtonClick">Browse</Button>
+                </Grid>
+            </GroupBox>
+            
+        </StackPanel>
+
+    </Grid>
+</Window>

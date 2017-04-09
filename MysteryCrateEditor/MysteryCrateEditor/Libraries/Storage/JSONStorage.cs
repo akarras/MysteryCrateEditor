@@ -16,15 +16,35 @@ namespace MysteryCrateEditor.Libraries.Storage
     /// </summary>
     public class JSONStorage : IStorage
     {
+        private string storageLocation;
+        /// <summary>
+        /// Creates a JSON storage in the given directory
+        /// </summary>
+        /// <param name="directory">Full path to the crate directory</param>
+        public JSONStorage(string directory)
+        {
+            if(!Directory.Exists(directory))
+            {
+                throw new DirectoryNotFoundException();
+            }
+            // As long as we've found a directory set it to the current storage location
+            storageLocation = directory;
+        }
+
+        public JSONStorage()
+        {
+            // Default storage location
+            storageLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MysteryCrateEditor/crates";
+        }
+
+
         private List<Crate> _crates;
 
         #region interface_methods
         public void DeleteCrate(Crate crate)
         {
-            // This really should be it's own method...
-            string localPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MysteryCrateEditor/crates";
             // Delete the crate :'(
-            string cratePath = $"{localPath}/{crate.Id}.json";
+            string cratePath = $"{storageLocation}/{crate.Id}.json";
             if(File.Exists(cratePath))
             {
                 File.Delete(cratePath);
@@ -49,7 +69,13 @@ namespace MysteryCrateEditor.Libraries.Storage
         {
             List<Crate> crates = new List<Crate>();
             // Iterate through all of the files found in the crate directory
-            string[] files = getFiles();
+            
+            if (!Directory.Exists(storageLocation))
+            { 
+                Directory.CreateDirectory(storageLocation);
+            }
+            // Get all .json files from the crate directory
+            string[] files = Directory.GetFiles(storageLocation, "*.json");
             foreach(string filePath in files)
             {
                 // See if the crate loads correctly before adding it
@@ -67,13 +93,12 @@ namespace MysteryCrateEditor.Libraries.Storage
         public void SaveCrate(Crate crate)
         {
             // Double check the directory exists before we save to it
-            string localPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\MysteryCrateEditor/crates";
-            if (!Directory.Exists(localPath))
+            if (!Directory.Exists(storageLocation))
             {
-                Directory.CreateDirectory(localPath);
+                throw new DirectoryNotFoundException();
             }
             // Creates or overwrites our crate file
-            using (FileStream crateFile = File.Create($"{localPath}/{crate.Id}.json"))
+            using (FileStream crateFile = File.Create($"{storageLocation}/{crate.Id}.json"))
             {
                 // Opens a new writer for us
                 using (StreamWriter writer = new StreamWriter(crateFile))
@@ -91,19 +116,16 @@ namespace MysteryCrateEditor.Libraries.Storage
 
         }
         #endregion
+
+
         #region helpers
         /// <summary>
-        /// Get a list of all the files in the crates directory in the local application data folder
+        /// Get a list of all the files from the given directory
         /// </summary>
         /// <returns>File paths to crate files</returns>
-        private string[] getFiles()
+        private string[] getFiles(string directory)
         {
-            string localPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\MysteryCrateEditor\\crates";
-            if (!Directory.Exists(localPath))
-            {
-                Directory.CreateDirectory(localPath);
-            }
-            return Directory.GetFiles(localPath);
+            return Directory.GetFiles(directory,"*.json");
         }
 
         private void tryCrateLoad(string filePath, out Crate crate)

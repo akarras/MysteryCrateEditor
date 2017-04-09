@@ -26,8 +26,16 @@ namespace MysteryCrateEditor
         public MainWindow()
         {
             InitializeComponent();
-            // Initialize our storage and load our crates from memory
-            storage = new JSONStorage();
+            var preferences = Preferences.loadPreferences();
+            if (string.IsNullOrEmpty(preferences.defaultLocation))
+            {
+                // Initialize our storage and load our crates from memory
+                storage = new JSONStorage();
+            }
+            else
+            {
+                storage = new JSONStorage(preferences.defaultLocation);
+            }
             loadData();
             updateUI();
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Copy, CopyExecuted, CanCopy));
@@ -641,6 +649,12 @@ namespace MysteryCrateEditor
             var panel = (StackPanel)sender;
             var tag = (IRewardTag)panel.DataContext;
             Clipboard.SetDataObject(tag, true);
+        }
+
+        private void PreferencesButton_Click(object sender, RoutedEventArgs e)
+        {
+            var prefWindow = new PreferencesWindow();
+            prefWindow.Show();
         }
     }
 }

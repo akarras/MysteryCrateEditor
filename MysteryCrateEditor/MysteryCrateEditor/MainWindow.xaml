@@ -33,9 +33,9 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200*"/>
-            <ColumnDefinition Width="280*"/>
-            <ColumnDefinition Width="280*"/>
+            <ColumnDefinition Width="206"/>
+            <ColumnDefinition Width="288"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" Background="#040F16">
@@ -182,7 +182,7 @@
                         </StackPanel>
                     </StackPanel>
                 </Expander>
-                
+
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Minimum:"/>
                     <TextBox Width="25" Text="{Binding MinimumRewards}"/>
@@ -270,7 +270,8 @@
                                         <ColumnDefinition Width="120*"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="Item: "/>
-                                    <TextBox Text="{Binding Item}" Grid.Column="1"/>
+                                    <toolkit:AutoSelectTextBox Text="{Binding Item}" Grid.Column="1"/>
+                                    <!--<TextBox Text="{Binding Item}" Grid.Column="1"/>-->
                                     <TextBlock Text="Amount: " Grid.Column="2"/>
                                     <TextBox Text="{Binding Amount}" Width="75" Grid.Column="3"/>
                                     <TextBlock Text="Name: " Grid.Row="2"/>
@@ -312,6 +313,9 @@
             </StackPanel>
         </ScrollViewer>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="1">
+            <Button Width="40" Click="PreferencesButton_Click" ToolTip="Changes Preferences">
+                <fa:FontAwesome Icon="Cog"/>
+            </Button>
             <Button Width="40" Click="ExportAll_Click" ToolTip="Export all crates to a file">
                 <fa:FontAwesome Icon="ArrowDown"/>
             </Button>
