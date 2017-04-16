@@ -38,7 +38,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel Orientation="Vertical" Background="#040F16">
+            <StackPanel Orientation="Vertical" Background="#FF4B4B4B">
                 <ListBox x:Name="CrateList" Background="Transparent" VerticalAlignment="Stretch">
                     <ListBox.ContextMenu>
                         <ContextMenu>
@@ -56,7 +56,7 @@
             </StackPanel>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
-            <StackPanel IsEnabled="{Binding SelectedValue, Converter={StaticResource nullToBool}, ElementName=CrateList}" Background="#0B4F6C" x:Name="CratePanel" DataContext="{Binding SelectedValue, ElementName=CrateList}">
+            <StackPanel IsEnabled="{Binding SelectedValue, Converter={StaticResource nullToBool}, ElementName=CrateList}" Background="#FF292929" x:Name="CratePanel" DataContext="{Binding SelectedValue, ElementName=CrateList}">
                 <TextBlock Text="Crate Type"/>
                 <CheckBox IsChecked="{Binding Preview}" Content="Is Preview Enabled?"/>
                 <ComboBox x:Name="CrateTypeComboBox" SelectedItem="{Binding Type}"/>
@@ -221,7 +221,7 @@
             </StackPanel>
         </ScrollViewer>
         <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
-            <StackPanel IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=RewardPanel}"  x:Name="RewardPanel" Background="#01BAEF" DataContext="{Binding SelectedValue, ElementName=RewardsListBox}">
+            <StackPanel IsEnabled="{Binding DataContext, Converter={StaticResource nullToBool}, ElementName=RewardPanel}"  x:Name="RewardPanel" Background="#FF131313" DataContext="{Binding SelectedValue, ElementName=RewardsListBox}">
                 <TextBlock Text="Name"/>
                 <TextBox Text="{Binding Name}"/>
                 <StackPanel Orientation="Horizontal">
