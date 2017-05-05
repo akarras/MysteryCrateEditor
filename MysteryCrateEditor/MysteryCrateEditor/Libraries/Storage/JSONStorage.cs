@@ -116,7 +116,10 @@ namespace MysteryCrateEditor.Libraries.Storage
             }
             if(numberOfBackups > 0)
             {
-                File.Move($"{storageLocation}/{crate.Id}.json", $"{storageLocation}/{crate.Id}.json1");
+                if(File.Exists($"{storageLocation}/{crate.Id}.json"))
+                {
+                    File.Move($"{storageLocation}/{crate.Id}.json", $"{storageLocation}/{crate.Id}.json1");
+                }
             }
 
             // Creates or overwrites our crate file
@@ -134,8 +137,6 @@ namespace MysteryCrateEditor.Libraries.Storage
                     writer.Write(jsonData);
                 }
             }
-
-
         }
         #endregion
 
