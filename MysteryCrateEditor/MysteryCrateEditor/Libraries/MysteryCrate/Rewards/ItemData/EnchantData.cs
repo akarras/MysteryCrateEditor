@@ -136,6 +136,11 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData
                         Sword = true,
                         Axe = true
                     };
+                case MinecraftEnchants.SweepingEdge:
+                    return new EnchantCompatability((int)MinecraftEnchants.SweepingEdge)
+                    {
+                        Sword = true
+                    };
                 case MinecraftEnchants.Smite:
                     return new EnchantCompatability((int)MinecraftEnchants.Smite)
                     {
@@ -275,6 +280,7 @@ namespace MysteryCrateEditor.Libraries.MysteryCrate.Rewards.ItemData
         Knockback = 19,
         FireAspect = 20,
         Looting = 21,
+        SweepingEdge = 22,
         Efficiency = 32,
         SilkTouch = 33,
         Unbreaking = 34,
